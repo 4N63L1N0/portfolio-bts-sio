@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Projet — Titre du projet</title>
+  <meta name="description" content="Page projet — portfolio">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* 1) Styles inspirés de la page principale (sobre & créatif) */
+    :root{--bg:#071022;--muted:#9aa6b2;--accent-from:#5eead4;--accent-to:#60a5fa}
+    *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#e6eef6}
+    .wrap{max-width:1100px;margin:28px auto;padding:20px;position:relative}
+    nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px)}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-to),var(--accent-from));display:flex;align-items:center;justify-content:center;color:#042033;font-weight:700}
+    a{color:var(--muted);text-decoration:none}
+
+    .hero{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-bottom:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+    h1{margin:0 0 8px}
+    p.lead{color:var(--muted);margin:0 0 12px}
+
+    /* gallery */
+    .gallery{display:flex;gap:12px;overflow:auto;padding:8px 0}
+    .thumb{min-width:220px;flex:0 0 auto;border-radius:10px;overflow:hidden}
+    .thumb img{width:100%;height:140px;object-fit:cover;display:block}
+
+    /* content */
+    .content{margin-top:12px;color:var(--muted);line-height:1.5}
+    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .pill{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+
+    /* PDF area */
+    .pdf-area{margin-top:16px;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+    .pdf-controls{display:flex;gap:8px;align-items:center}
+
+    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.gallery{gap:10px}.thumb{min-width:160px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo">AG</div>
+        <div>
+          <div style="font-weight:700">AnGix — Projet</div>
+          <div style="font-size:12px;color:var(--muted)">BTS SIO — Détail projet</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html">← Retour</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="card">
+        <h1 id="title">Déploiement matériel pour outil de production industriel </h1>
+        <p class="lead" id="subtitle">Optimisation des postes de production : connexion, configuration et validation de l'ERP VIF.</p>
+        <div class="meta">
+          <div class="pill" id="disc">Discipline: Admin / Cyber</div>
+          <div class="pill" id="status">Statut: En cours</div>
+          <div class="pill" id="tech">Technos: HTML, JS, Bash</div>
+        </div>
+
+        <div class="content" id="description">
+          <h2>Contexte 🧭</h2>
+          <p>Dans le cadre de la modernisation de l'outil de production, l'usine a remplacé le logiciel PV1 par le nouvel ERP industriel <strong>VIF</strong>. Pour assurer le déploiement, nous avons installé des terminaux légers <strong>Platines AXEL</strong>, chacun configuré spécifiquement pour son poste via des fichiers <code>.txt</code>. Ces platines démarrent le logiciel VIF dans un environnement sécurisé, en version tactile ou avec écran et clavier selon les besoins.</p>
+
+          <h3>Mon rôle 🛠️</h3>
+          <p>J'ai pris en charge l'ensemble des tâches techniques et de validation pour la mise en service des postes :</p>
+          <ul>
+            <li>📝 Préparer et adapter les fichiers de paramétrage des platines selon la position de chaque poste.</li>
+            <li>🔌 Installer et connecter le matériel (platine + écran/clavier ou platine tactile).</li>
+            <li>🔎 Vérifier l'affichage et le lancement correct du logiciel VIF sur chaque terminal.</li>
+            <li>🔒 Configurer les ports des switchs (VLAN dédiés, paramètres d'authentification/connexion).</li>
+            <li>📡 Attribuer des adresses IP statiques, masque et passerelle conformément au plan d'adressage local.</li>
+            <li>🖨️ Paramétrer et tester une imprimante industrielle réseau pour l'impression depuis VIF.</li>
+            <li>🧪 Réaliser des tests fonctionnels réseau et applicatifs sur chaque poste.</li>
+          </ul>
+
+          <h3>Portée & ressources 📦</h3>
+          <p>Environ 10 postes ont été déployés dans plusieurs secteurs de l'usine. Les ressources mobilisées :</p>
+          <ul>
+            <li>🖥️ Platines AXEL (terminaux légers)</li>
+            <li>🖨️ Imprimante industrielle connectée en réseau</li>
+            <li>🔗 Switchs industriels (HP) configurés avec VLANs</li>
+            <li>📦 Logiciel de production VIF (ERP)</li>
+            <li>🗂️ Fichiers de configuration <code>.txt</code> pour personnalisation par poste</li>
+            <li>📟 Système de supervision interne</li>
+            <li>🔧 Interface de configuration de l'imprimante (clé USB)</li>
+          </ul>
+
+          <h3>Résultats / Bilan ✅</h3>
+          <ul>
+            <li>🚀 Le logiciel VIF a été mis en service sur l'ensemble des postes concernés.</li>
+            <li>🔒 Le réseau a été segmenté correctement (VLAN dédiés), renforçant la sécurité industrielle.</li>
+            <li>👍 La prise en main par les utilisateurs a été simplifiée grâce aux platines tactiles.</li>
+            <li>✔️ Les impressions depuis VIF ont été validées sur l'imprimante industrielle réseau.</li>
+          </ul>
+
+          <h3>Compétences acquises 🎯</h3>
+          <ul>
+            <li>🧰 Configuration de terminaux légers et gestion des profils par fichier.</li>
+            <li>🌐 Paramétrage réseau (VLAN, IP statique) dans un environnement industriel.</li>
+            <li>🔌 Intégration et test d'équipements périphériques (imprimante réseau).</li>
+            <li>🤝 Support opérationnel à la mise en production d'un nouvel outil (VIF).</li>
+          </ul>
+        </div>
+
+        <div class="pdf-area">
+          <div style="font-weight:700;margin-bottom:8px">PDF / Rapport</div>
+          <div class="pdf-controls">
+            <input type="file" id="pdfInput" accept="application/pdf">
+            <button id="previewPdf">Prévisualiser</button>
+            <a id="downloadPdf" href="#" download style="display:none">Télécharger le PDF</a>
+          </div>
+          <div id="pdfPreview" style="margin-top:12px;display:none">
+            <iframe id="pdfFrame" src="" width="100%" height="400" style="border:0;border-radius:8px"></iframe>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="card">
+        <div style="font-weight:700;margin-bottom:8px">Galerie</div>
+        <div class="gallery" id="gallery">
+          <div class="thumb"><img data-src="images/placeholder1.jpg" alt="illustration 1" loading="lazy"></div>
+          <div class="thumb"><img data-src="images/placeholder2.jpg" alt="illustration 2" loading="lazy"></div>
+          <div class="thumb"><img data-src="images/placeholder3.jpg" alt="illustration 3" loading="lazy"></div>
+        </div>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">Clique sur une miniature pour l'ouvrir en grand.</div>
+      </aside>
+    </section>
+
+    <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.86);align-items:center;justify-content:center;z-index:50">
+      <img id="lightboxImg" src="" style="max-width:92%;max-height:92%;border-radius:10px">
+    </div>
+
+    <footer>
+      © <span id="year"></span> AnGix — Portfolio BTS SIO
+    </footer>
+  </div>
+
+  <script>
+    // 1) small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // lazy load gallery images
+    document.querySelectorAll('.gallery img').forEach(img => { const src = img.getAttribute('data-src'); if(src){ img.src = src; } });
+
+    // lightbox
+    document.getElementById('gallery').addEventListener('click', (e) => {
+      const img = e.target.closest('img'); if(!img) return; const lb = document.getElementById('lightbox'); document.getElementById('lightboxImg').src = img.src; lb.style.display = 'flex';
+    });
+    document.getElementById('lightbox').addEventListener('click', ()=>{ document.getElementById('lightbox').style.display='none'; });
+
+    // PDF upload & preview
+    const pdfInput = document.getElementById('pdfInput');
+    const previewBtn = document.getElementById('previewPdf');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const pdfPreview = document.getElementById('pdfPreview');
+    const downloadPdf = document.getElementById('downloadPdf');
+    let pdfUrl = null;
+
+    pdfInput.addEventListener('change', (e)=>{
+      const file = e.target.files[0]; if(!file) return; if(pdfUrl) URL.revokeObjectURL(pdfUrl); pdfUrl = URL.createObjectURL(file); downloadPdf.href = pdfUrl; downloadPdf.style.display='inline-block'; downloadPdf.textContent = 'Télécharger le PDF';
+    });
+
+    previewBtn.addEventListener('click', ()=>{
+      if(!pdfInput.files[0]){ alert('Choisis d\'abord un fichier PDF.'); return; }
+      pdfFrame.src = pdfUrl; pdfPreview.style.display = 'block';
+    });
+
+    // ready to be edited: replace texts and images per projet
+    // Example usage: change innerText / src dynamically if you generate pages
+  </script>
+</body>
+</html>

@@ -1,0 +1,903 @@
+﻿<!--
+  Portfolio - index.html
+  Étape : ajout d'un background animé et d'animations subtiles pour rendre le site moins plat
+  - HTML / CSS / JS pur
+  - Animations : gradient animé, blobs flottants, parallax léger au survol de la souris, micro-animations sur les cartes
+  - Sections: Nav, Hero, Projets (Admin / Cyber), Veille, À propos, Contact, Footer
+-->
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Portfolio — BTS SIO</title>
+  <meta name="description" content="Portfolio BTS SIO — projets, veilles et contact">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#071022; /* base */
+      --card:#0b1220;
+      --muted:#9aa6b2;
+      --accent-from:#5eead4;
+      --accent-to:#60a5fa;
+      --glass: rgba(255,255,255,0.03);
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    /* Background animation container */
+    body{
+      margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:#e6eef6;line-height:1.5;padding:32px 20px;position:relative;overflow-x:hidden;background:var(--bg);
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Skip link for accessibility */
+    .skip-link{position:absolute;left:8px;top:8px;background:#042033;color:#e6eef6;padding:8px 12px;border-radius:8px;z-index:6;transform:translateY(-120%);transition:transform .22s ease}
+    .skip-link:focus{transform:none}
+
+    /* Animated gradient behind content (subtle and slow) */
+    .bg-gradient{
+      position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.65;
+      background:linear-gradient(120deg, rgba(96,165,250,0.06), rgba(94,234,212,0.04));
+      mix-blend-mode:screen;filter:blur(40px);
+      animation: gradientShift 18s linear infinite;
+    }
+    @keyframes gradientShift{
+      0%{transform:translate3d(-10%, -5%, 0) scale(1)}
+      50%{transform:translate3d(10%, 5%, 0) scale(1.05)}
+      100%{transform:translate3d(-10%, -5%, 0) scale(1)}
+    }
+
+    /* Floating blurred blobs for depth */
+    .bg-blob{position:fixed;border-radius:50%;filter:blur(36px);opacity:0.28;mix-blend-mode:screen;pointer-events:none;z-index:0}
+    .blob-1{width:420px;height:420px;left:-120px;top:-80px;background:radial-gradient(circle at 30% 30%,var(--accent-from),transparent 40%)}
+    .blob-2{width:360px;height:360px;right:-90px;bottom:-60px;background:radial-gradient(circle at 70% 70%,var(--accent-to),transparent 40%)}
+    .blob-3{width:260px;height:260px;left:60%;top:10%;background:radial-gradient(circle at 40% 60%,rgba(255,255,255,0.06),transparent 40%)}
+    .bg-blob {animation: floaty 12s ease-in-out infinite}
+    @keyframes floaty{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-18px) translateX(6px)}100%{transform:translateY(0) translateX(0)}}
+
+    /* Content container sits above background */
+    .container{max-width:var(--max-width);margin:0 auto;position:relative;z-index:1;padding-top:18px}
+
+    /* NAV - sticky header */
+    nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;position:sticky;top:18px;z-index:4;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow:0 8px 24px rgba(2,6,23,0.45)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-to),var(--accent-from));display:flex;align-items:center;justify-content:center;font-weight:700;color:#042033}
+    .navlinks{display:flex;gap:14px;align-items:center}
+    a.navbtn{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    a.navbtn:hover{color:#fff;background:var(--glass)}
+    .cta{padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,0.06);border-radius:10px}
+
+    /* mobile menu button */
+    .menu-btn{display:none;border:none;background:transparent;color:var(--muted);font-weight:700;padding:8px;border-radius:8px}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:center;margin-bottom:44px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:16px;backdrop-filter: blur(8px);box-shadow: 0 10px 30px rgba(2,6,23,0.6);transform-origin:center;transition:transform .25s ease}
+    .hero-card:hover{transform:translateY(-6px) scale(1.01)}
+    h1{font-size:clamp(28px,4vw,40px);margin:0 0 12px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .hero-actions{display:flex;gap:12px}
+    button.primary{background:linear-gradient(90deg,var(--accent-from),var(--accent-to));border:none;padding:10px 16px;border-radius:10px;color:#042033;font-weight:700;cursor:pointer}
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* side profile */
+    .profile{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:15px;border-radius:12px;box-shadow:0 8px 20px rgba(2,6,23,0.5)}
+    .profile img{width:100%;height:250px;object-fit:cover;border-radius:10px;margin-bottom:12px;transition:transform .45s ease}
+    .profile img:hover{transform:scale(1.03) translateY(-6px)}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:14px;color:var(--muted)}
+
+    /* Projects */
+    .projects-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .projects-sub{color:var(--muted);margin:4px 0 12px}
+    .projects-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+    .project-col{min-width:0}
+
+    /* Horizontal projects with integrated arrows */
+    .carousel-wrap{display:flex;align-items:center;gap:10px}
+    .carousel-nav{
+      width:38px;height:38px;border:none;border-radius:999px;cursor:pointer;
+      background:rgba(255,255,255,0.06);color:#e6eef6;font-size:20px;line-height:1;
+      display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .carousel-nav:hover{background:rgba(255,255,255,0.14);transform:translateY(-1px)}
+    .cards-scroll{
+      display:flex;gap:0;overflow-x:hidden;padding:12px 0;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;flex:1;
+    }
+    .cards-scroll::-webkit-scrollbar{display:none}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      padding:12px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.02);
+      transition:transform .35s ease,box-shadow .35s ease,filter .35s ease;
+      flex:0 0 100%;max-width:100%;min-width:0;scroll-snap-align:start;
+      display:flex;flex-direction:column;
+      scroll-snap-stop:always;
+    }
+    .card:hover{transform:translateY(-12px) rotateX(2deg);box-shadow:0 24px 48px rgba(2,6,23,0.7);filter:brightness(1.02)}
+    .card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+    .card h3{margin:10px 0 6px;font-size:16px;min-height:44px}
+    .card p{margin:0;color:var(--muted);font-size:14px;min-height:44px}
+    .card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+    .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:12px;color:var(--muted)}
+
+    /* Keep original grid as fallback for large screens where needed */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+    /* Veille (mini blog) */
+    .muted{color:var(--muted)}
+    .news{display:flex;flex-direction:column;gap:12px}
+    .veille-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .note{
+      background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+      padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);
+      box-shadow:0 8px 20px rgba(2,6,23,0.35);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      display:flex;flex-direction:column;min-height:182px;
+    }
+    .note:hover{transform:translateY(-3px);border-color:rgba(96,165,250,0.35);box-shadow:0 12px 28px rgba(2,6,23,0.5)}
+    .note-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+    .note-source{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:rgba(94,234,212,0.12);color:#b9fff4;border:1px solid rgba(94,234,212,0.18)}
+    .note-time{font-size:12px;color:var(--muted);white-space:nowrap}
+    .note-title{margin:0 0 8px;font-size:15px;line-height:1.35}
+    .note-title a{color:#eaf5ff;text-decoration:none}
+    .note-title a:hover{text-decoration:underline}
+    .note-excerpt{margin:0;color:var(--muted);font-size:13px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .note-meta{margin-top:auto;padding-top:10px}
+    .note-link{color:#9fd8ff;text-decoration:none;font-size:13px;font-weight:600}
+    .note-link:hover{text-decoration:underline}
+    .empty-card{padding:14px;border-radius:12px;border:1px dashed rgba(255,255,255,0.15);color:var(--muted);background:rgba(255,255,255,0.01)}
+    .veille-pager{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px}
+    .veille-page-info{min-width:90px;text-align:center;color:var(--muted);font-size:13px}
+    .veille-pager[hidden]{display:none}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+
+    /* CONTACT */
+    form{display:grid;gap:10px}
+    input,textarea{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:8px;color:#e6eef6}
+
+    footer{margin-top:36px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .about-grid{grid-template-columns:1fr}
+      .projects-columns{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .grid{grid-template-columns:1fr}
+      nav{gap:8px}
+      .navlinks{display:none}
+      .menu-btn{display:inline-flex}
+      .carousel-nav{width:34px;height:34px;font-size:18px}
+      .veille-grid{grid-template-columns:1fr}
+    }
+
+    /* reveal animation */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+
+  </style>
+</head>
+<body>
+  <!-- animated background elements -->
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="bg-blob blob-1" aria-hidden="true"></div>
+  <div class="bg-blob blob-2" aria-hidden="true"></div>
+  <div class="bg-blob blob-3" aria-hidden="true"></div>
+
+  <div class="container">
+    <nav>
+      <div class="brand">
+        <div class="logo">AF</div>
+        <div>
+          <div style="font-weight:700">4N63L1N0 — Portfolio</div>
+          <div style="font-size:13px;color:var(--muted)">BTS SIO — Solutions d'infrastructure</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+        <div class="navlinks" id="navLinks">
+          <a class="navbtn" href="#projects">Projets</a>
+          <a class="navbtn" href="#veille">Veille</a>
+          <a class="navbtn" href="#about">À propos</a>
+          <a class="navbtn" href="#contact">Contact</a>
+          <a class="navbtn" href="synthese.html">Tableau de synthèse</a>
+          <a class="navbtn cta" href="cv.pdf" download>Télécharger CV</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero" id="top">
+      <div class="hero-card reveal" id="heroCard">
+        <h1>Salut — Je suis Angélino FERREIRA, apprenti en BTS SIO</h1>
+        <p class="lead">Je conçois des solutions d’infrastructure et des petits outils web. Ici, tu trouveras mes projets, mes veilles technologiques et des démonstrations techniques.</p>
+        <div class="hero-actions">
+          <button class="primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Voir mes projets</button>
+          <button class="secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Me contacter</button>
+        </div>
+        <div style="margin-top:18px;color:var(--muted);font-size:13px">Dernière mise à jour : <strong id="lastUpdate">30 octobre 2025</strong></div>
+      </div>
+
+      <aside class="profile reveal" id="profileCard">
+        <img id="profileImg" src="Sujet.png" alt="Photo profil">
+        <div style="font-weight:700">Angélino</div>
+        <div style="color:var(--muted);font-size:14px;margin-bottom:8px">Technicien poste de travail indus — BTS SIO (A)</div>
+        <div class="chips">
+          <div class="chip">HTML</div>
+          <div class="chip">CSS</div>
+          <div class="chip">Mac OS</div>
+          <div class="chip">Linux</div>
+          <div class="chip">Windows</div>
+          <div class="chip">Réseaux</div>
+          <div class="chip">Cybersécurité</div>
+        </div>
+      </aside>
+    </section>
+    <!-- About -->
+    <section id="about" style="margin-top:28px">
+      <h2 class="reveal">À propos</h2>
+      <div class="about-grid" style="margin-top:12px">
+        <div class="reveal">
+          <p style="color:var(--muted)">Je suis en BTS SIO, option SISR. J'aime concevoir des solutions simples et robustes, automatiser les tâches répétitives, et partager mes découvertes techniques via des veilles.</p>
+          <ul style="color:var(--muted)">
+            <li>Compétences : administration Linux, VLAN, scripting, HTML/CSS/JS</li>
+            <li>Logiciels : VIF, outils d'administration, Git</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Projects -->
+    <section id="projects">
+      <div class="projects-heading">
+        <div>
+          <h2 class="reveal">Projets</h2>
+          <p class="projects-sub reveal">Sélection de projets à triés par discipline : Admin / Infra et Cyber.</p>
+        </div>
+      </div>
+
+      <div class="projects-columns" style="margin-top:12px">
+        <!-- Admin / Infra projects -->
+        <div class="project-col">
+          <h3 class="reveal">Admin &amp; Infrastructure</h3>
+          <p class="projects-sub reveal">Projets portant sur l'administration système, réseaux et déploiement.</p>
+          <div class="carousel-wrap reveal">
+            <button class="carousel-nav" type="button" aria-label="Défiler les projets administration vers la gauche" data-target="adminProjects" data-dir="left">‹</button>
+            <div class="cards-scroll" id="adminProjects" aria-label="Projets administration">
+
+          <article class="card">
+            <img src="https://plus.unsplash.com/premium_photo-1663036532511-0b828f4034fb?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2072" alt="Remplacement PV1">
+            <h3>Remplacement PV1 → VIF</h3>
+            <p>Migration de l'outil de production, configuration des platines AXEL et segmentation VLAN.</p>
+            <div class="meta">
+              <div class="pill">Alternance</div>
+              <a href="projects/project1.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Infra 4">
+            <h3>Déploiement VLAN</h3>
+            <p>Guide et scripts pour déployer des VLANs isolés en entreprise.</p>
+            <div class="meta"><div class="pill">Guide</div><a class="pill" href="projects/project2.html" style="text-decoration:none;color:var(--muted)">Voir →</a></div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1542831371-d531d36971e6?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Dashboard">
+            <h3>PROJETS 2</h3>
+            <p>Prototype de dashboard de supervision réseau avec métriques synthétiques et alertes.</p>
+            <div class="meta">
+              <div class="pill">Prototype</div>
+              <a href="projects/project3.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Automatisation">
+            <h3>PROJETS 3</h3>
+            <p>Scripts (bash / batch) pour déploiement et configuration initiale d'équipements.</p>
+            <div class="meta">
+              <div class="pill">Outils</div>
+              <a href="projects/project4.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a>
+            </div>
+          </article>
+
+          <!-- placeholder extra cards to demonstrate scrolling -->
+          
+
+            </div>
+            <button class="carousel-nav" type="button" aria-label="Défiler les projets administration vers la droite" data-target="adminProjects" data-dir="right">›</button>
+          </div>
+        </div>
+
+        <!-- Cyber projects -->
+        <div class="project-col">
+          <h3 class="reveal">Projets Cyber</h3>
+          <p class="projects-sub reveal">Projets orientés sécurité informatique : pentest, audits, hardening.</p>
+          <div class="carousel-wrap reveal">
+            <button class="carousel-nav" type="button" aria-label="Défiler les projets cyber vers la gauche" data-target="cyberProjects" data-dir="left">‹</button>
+            <div class="cards-scroll" id="cyberProjects" aria-label="Projets cyber">
+
+          <article class="card">
+            <img src="https://plus.unsplash.com/premium_photo-1676618539987-12b7c8a8ae61?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1035" alt="Segmentation">
+            <h3>Sécurisation VLANs</h3>
+            <p>Étude sur les bonnes pratiques de segmentation réseau pour limiter la surface d'attaque.</p>
+            <div class="meta">
+              <div class="pill">Audit</div>
+              <a href="projects/cyber/project1.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a>
+              </div>
+            </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1548092372-0d1bd40894a3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070" alt="Pentest Web">
+            <h3>PROJETS 2</h3>
+            <p>Audit et rapport d'une application web vulnérable — découverte et remédiations.</p>
+            <div class="meta">
+              <div class="pill">Sécurité</div>
+              <a href="projects/cyber/project2.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2100" alt="Hardening">
+            <h3>PROJETS 3</h3>
+            <p>Checklist et scripts pour durcir des machines Linux (SSH, permissions, audit).</p>
+            <div class="meta"><div class="pill">Outils</div><a href="projects/cyber/project3.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a></div>
+          </article>
+
+          <!-- more placeholders to show scrolling -->
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1614064548237-096f735f344f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070" alt="Forensics">
+            <h3>PROJETS 4</h3>
+            <p>Analyse basique de logs et artefacts suite à compromission simulée.</p>
+            <div class="meta"><div class="pill">Forensics</div><a href="projects/cyber/project4.html" class="pill" style="text-decoration:none;color:var(--muted)">Voir →</a></div>
+          </article>
+
+            </div>
+            <button class="carousel-nav" type="button" aria-label="Défiler les projets cyber vers la droite" data-target="cyberProjects" data-dir="right">›</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Veille -->
+    <section id="veille" class="mt-28">
+      <h2 class="reveal">Veille</h2>
+      <p class="lead reveal">Flux RSS agrégés automatiquement — derniers articles récents.</p>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:12px">
+        <div id="veilleStatus" class="muted">Chargement des flux…</div>
+        <div>
+          <button id="refreshFeeds" class="secondary">Actualiser</button>
+        </div>
+      </div>
+
+      <div id="veilleNews" style="margin-top:12px" aria-live="polite"></div>
+      <div id="veillePager" class="veille-pager" hidden>
+        <button id="veillePrev" class="carousel-nav" type="button" aria-label="Page précédente veille">‹</button>
+        <div id="veillePageInfo" class="veille-page-info">1 / 1</div>
+        <button id="veilleNext" class="carousel-nav" type="button" aria-label="Page suivante veille">›</button>
+      </div>
+    </section>
+
+
+    <!-- Contact -->
+    <section id="contact" style="margin-top:28px">
+      <h2 class="reveal">Contact</h2>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
+        <form class="reveal" action="https://formsubmit.co/angelino.ferreira1@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nouveau message depuis ton portfolio">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none">
+          <input type="text" id="name" name="name" placeholder="Ton nom" required>
+          <input type="email" id="email" name="email" placeholder="Ton email" required>
+          <input type="text" id="subject" name="subject" placeholder="Sujet" required>
+          <textarea id="message" name="message" rows="6" placeholder="Ton message" required></textarea>
+          <div style="display:flex;gap:10px">
+            <button class="primary" type="submit">Envoyer</button>
+            <button class="secondary" type="button" onclick="copyEmail()">Copier mon email</button>
+          </div>
+          <div class="muted" style="font-size:12px">Premier envoi: FormSubmit t'enverra un mail de confirmation pour activer le formulaire.</div>
+        </form>
+        <aside class="profile reveal" style="padding:18px">
+          <div style="font-weight:700">Coordonnées</div>
+          <div style="color:var(--muted);margin-top:8px">Email : <a href="mailto:angelino.ferreira1@gmail.com" style="color:var(--muted);text-decoration:underline">angelino.ferreira1@gmail.com</a></div>
+          <div style="color:var(--muted);margin-top:6px">GitHub : <a href="https://github.com/4N63L1N0" style="color:var(--muted);text-decoration:underline">github.com/4N63L1N0</a></div>
+          <div style="color:var(--muted);margin-top:6px">LinkedIn : <a href="https://www.linkedin.com/in/ang%C3%A9lino-ferreira-12553b2b4/" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:underline">linkedin.com/in/angelino-ferreira</a></div>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Angélino — Portfolio BTS SIO</div>
+    
+  <div style="text-align:center;margin-top:10px;">
+    <a href="remerciements.html" class="navbtn" style="display:inline-block;margin-top:8px;">Remerciements 🙏</a>
+  </div>
+
+</footer>
+  </div>
+
+  <script>
+(function(){
+  'use strict';
+
+  // util
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  // --- Parallax / UI code (unchanged, consolidated) ---
+  let pointer = { x: 0, y: 0, cx: 0, cy: 0 }, blobs = [], hero, profile;
+  let rafId = null;
+  function applyTransforms(){
+    blobs.forEach((b,i) => {
+      const depth = (i+1)*6;
+      b.style.transform = `translate3d(${pointer.x*depth}px, ${pointer.y*depth}px, 0)`;
+    });
+    if (hero) hero.style.transform = `translate3d(${pointer.cx*0.01}px, ${pointer.cy*0.01}px, 0)`;
+    if (profile) profile.style.transform = `translate3d(${pointer.cx*0.008}px, ${pointer.cy*0.008}px, 0)`;
+    rafId = null;
+  }
+  function scheduleRaf(){ if (rafId == null) rafId = requestAnimationFrame(applyTransforms); }
+
+  // --- RSS / Veille aggregator ------------------------------------------------
+  // Configure your feeds here (public RSS/Atom URLs)
+  const FEEDS = [
+    'https://www.zdnet.com/topic/security/rss.xml',
+    'https://feeds.feedburner.com/TheHackersNews',
+    'https://www.reddit.com/r/sysadmin/.rss'
+  ];
+  const CACHE_KEY = 'veille_cache_v1';
+  const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+  const FETCH_TIMEOUT_MS = 9000;
+  const PROXIES = [
+    (url) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
+    (url) => 'https://corsproxy.io/?' + encodeURIComponent(url),
+    (url) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url)
+  ];
+  const VEILLE_PAGE_SIZE = 6;
+  let veilleItemsState = [];
+  let veillePageState = 0;
+
+  function saveCache(data){
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e){}
+  }
+  function loadCache(includeStale = false){
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const o = JSON.parse(raw);
+      if (!includeStale && Date.now() - o.ts > CACHE_TTL_MS) {
+        localStorage.removeItem(CACHE_KEY);
+        return null;
+      }
+      return o.data;
+    } catch { return null; }
+  }
+
+  async function fetchWithTimeout(url, timeoutMs = FETCH_TIMEOUT_MS){
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, {
+        signal: ctrl.signal,
+        headers: { 'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*' }
+      });
+      return res;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  async function fetchFeedRaw(url){
+    const candidates = [url, ...PROXIES.map(make => make(url))];
+    let lastErr = null;
+    for (const endpoint of candidates) {
+      try {
+        const res = await fetchWithTimeout(endpoint);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const txt = await res.text();
+        if (!txt || txt.trim().length < 20) throw new Error('Empty response');
+        return txt;
+      } catch (err) {
+        lastErr = err;
+      }
+    }
+    throw lastErr || new Error('All feed endpoints failed');
+  }
+
+  function safeIsoDate(value){
+    if (!value) return null;
+    const d = new Date(String(value).trim());
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+
+  function parseFeed(xmlText, sourceUrl){
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlText, 'application/xml');
+    if (doc.querySelector('parsererror')) throw new Error('Invalid XML from ' + sourceUrl);
+
+    const items = [];
+    const rssItems = doc.querySelectorAll('item');
+    const atomItems = doc.querySelectorAll('entry');
+
+    const mapNode = (node) => {
+      const title = (node.querySelector('title') || { textContent: '' }).textContent.trim();
+      // link: RSS item may have <link>text</link> or <link><a/></link>, Atom has <link href="">
+      let link = '';
+      const linkHref = node.querySelector('link[href]');
+      if (linkHref && linkHref.getAttribute) link = linkHref.getAttribute('href') || '';
+      if (!link) {
+        const linkEl = node.querySelector('link');
+        if (linkEl) {
+          link = (linkEl.getAttribute && linkEl.getAttribute('href')) || linkEl.textContent.trim() || '';
+        }
+      }
+      // fallback to guid
+      if (!link) {
+        const guid = node.querySelector('guid');
+        link = guid ? guid.textContent.trim() : '';
+      }
+      const pubNode = node.querySelector('pubDate, updated, published, dc\\:date');
+      const pubDate = pubNode ? safeIsoDate(pubNode.textContent) : null;
+      const descNode = node.querySelector('description, summary, content');
+      // simple excerpt and strip tags
+      const excerptRaw = descNode ? descNode.textContent.trim() : '';
+      const excerpt = excerptRaw.replace(/\s+/g,' ').slice(0, 280);
+      return { title, link, pubDate, excerpt, source: sourceUrl };
+    };
+
+    if (rssItems.length) rssItems.forEach(n => items.push(mapNode(n)));
+    else if (atomItems.length) atomItems.forEach(n => items.push(mapNode(n)));
+
+    return items;
+  }
+
+  function timeAgo(iso){
+    if (!iso) return '';
+    const d = new Date(iso);
+    const s = Math.floor((Date.now() - d.getTime())/1000);
+    if (s < 60) return `${s}s`;
+    if (s < 3600) return `${Math.floor(s/60)}m`;
+    if (s < 86400) return `${Math.floor(s/3600)}h`;
+    return `${Math.floor(s/86400)}j`;
+  }
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function sourceLabel(url){
+    try {
+      const host = new URL(url).hostname.replace(/^www\./, '');
+      return host.split('.').slice(0, -1).join('.') || host;
+    } catch { return 'source'; }
+  }
+
+  function updateVeillePager(){
+    const pager = $('#veillePager');
+    const info = $('#veillePageInfo');
+    const prev = $('#veillePrev');
+    const next = $('#veilleNext');
+    if (!pager || !info || !prev || !next) return;
+
+    const total = veilleItemsState.length;
+    const pages = Math.max(1, Math.ceil(total / VEILLE_PAGE_SIZE));
+    const current = Math.min(veillePageState + 1, pages);
+    pager.hidden = total <= VEILLE_PAGE_SIZE;
+    info.textContent = `${current} / ${pages}`;
+    prev.disabled = veillePageState <= 0;
+    next.disabled = veillePageState >= pages - 1;
+    prev.style.opacity = prev.disabled ? '0.45' : '1';
+    next.style.opacity = next.disabled ? '0.45' : '1';
+    prev.style.cursor = prev.disabled ? 'not-allowed' : 'pointer';
+    next.style.cursor = next.disabled ? 'not-allowed' : 'pointer';
+  }
+
+  function drawVeillePage(container){
+    if (!veilleItemsState.length){
+      container.innerHTML = `<div class="empty-card">Aucun article trouvé pour le moment.</div>`;
+      updateVeillePager();
+      return;
+    }
+
+    const start = veillePageState * VEILLE_PAGE_SIZE;
+    const pageItems = veilleItemsState.slice(start, start + VEILLE_PAGE_SIZE);
+    const html = pageItems.map(it => {
+      const when = it.pubDate ? `<span class="note-time">${timeAgo(it.pubDate)}</span>` : '';
+      const source = `<span class="note-source">${escapeHtml(sourceLabel(it.source || it.link || ''))}</span>`;
+      return `<article class="note">
+        <div class="note-head">
+          ${source}
+          ${when}
+        </div>
+        <h3 class="note-title">
+          <a href="${escapeHtml(it.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(it.title)}</a>
+        </h3>
+        ${ it.excerpt ? `<p class="note-excerpt">${escapeHtml(it.excerpt)}</p>` : `<p class="note-excerpt">Clique pour lire l'article complet.</p>` }
+        <div class="note-meta">
+          <a class="note-link" href="${escapeHtml(it.link)}" target="_blank" rel="noopener noreferrer">Lire l'article →</a>
+        </div>
+      </article>`;
+    }).join('');
+    container.innerHTML = `<div class="veille-grid">${html}</div>`;
+    updateVeillePager();
+  }
+
+  function renderItems(items, container, resetPage = true){
+    veilleItemsState = Array.isArray(items) ? items : [];
+    if (resetPage) veillePageState = 0;
+    const maxPage = Math.max(0, Math.ceil(veilleItemsState.length / VEILLE_PAGE_SIZE) - 1);
+    veillePageState = Math.min(veillePageState, maxPage);
+    drawVeillePage(container);
+  }
+
+  async function aggregateFeeds(force = false){
+    const statusEl = $('#veilleStatus');
+    const outEl = $('#veilleNews');
+    if (!statusEl || !outEl) return;
+    statusEl.textContent = 'Chargement des flux…';
+
+    if (!force) {
+      const cached = loadCache();
+      if (cached) {
+        renderItems(cached, outEl);
+        statusEl.textContent = `Dernier cache : ${new Date(cached._cachedAt).toLocaleTimeString()}`;
+        return;
+      }
+    }
+
+    try {
+      const all = [];
+      const tasks = FEEDS.map(async (f) => {
+        try {
+          const txt = await fetchFeedRaw(f);
+          const items = parseFeed(txt, f);
+          return items;
+        } catch (err) {
+          console.warn('Feed error', f, err);
+          return [];
+        }
+      });
+      const results = await Promise.all(tasks);
+      results.forEach(arr => all.push(...arr));
+      const normalized = all
+        .map(i => ({ ...i, pubDate: safeIsoDate(i.pubDate) }))
+        .filter(i => i.title && i.link)
+        .sort((a,b) => (b.pubDate || '').localeCompare(a.pubDate || ''));
+      const top = normalized.slice(0, 12);
+      top._cachedAt = Date.now();
+      try { saveCache(top); } catch(e){}
+      renderItems(top, outEl);
+      statusEl.textContent = `${top.length} articles • mis à jour à ${new Date().toLocaleTimeString()}`;
+    } catch (err) {
+      console.error('Erreur agrégation flux:', err);
+      const stale = loadCache(true);
+      if (stale && stale.length) {
+        renderItems(stale, outEl);
+        statusEl.textContent = `Flux indisponibles, affichage du cache local (${stale.length} articles).`;
+      } else {
+        statusEl.textContent = 'Erreur chargement des flux. Réessaie dans quelques instants.';
+      }
+    }
+  }
+
+  // --- Core DOM ready and glue (menu, carousels, events, parallax) -----------
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      // year
+      $('#year').textContent = new Date().getFullYear();
+
+      // reveal observer
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+      }, { threshold: 0.12 });
+      $$('.reveal').forEach(el => obs.observe(el));
+
+      // nav delegation
+      document.addEventListener('click', (ev) => {
+        const a = ev.target.closest('a.navbtn');
+        if (!a) return;
+        const href = a.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          ev.preventDefault();
+          const id = href.slice(1);
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          const navLinksEl = $('#navLinks');
+          if (window.innerWidth <= 640 && navLinksEl) {
+            navLinksEl.style.display = 'none';
+            navLinksEl.setAttribute('aria-hidden','true');
+            $('#menuBtn')?.setAttribute('aria-expanded','false');
+          }
+        }
+      });
+
+      // carousels: deterministic one-card navigation (no skipped cards)
+      const carouselRows = $$('.cards-scroll');
+      const carouselIndex = new WeakMap();
+      const getCards = (row) => $$('.card', row);
+      const getCurrentIndex = (row, cards) => {
+        if (!cards.length || row.clientWidth <= 0) return 0;
+        return Math.max(0, Math.min(cards.length - 1, Math.round(row.scrollLeft / row.clientWidth)));
+      };
+      const goToCardIndex = (row, cards, index, smooth = true) => {
+        if (!cards.length) return;
+        const clamped = Math.max(0, Math.min(index, cards.length - 1));
+        carouselIndex.set(row, clamped);
+        row.scrollTo({ left: clamped * row.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+      };
+
+      carouselRows.forEach((row) => {
+        const cards = getCards(row);
+        carouselIndex.set(row, 0);
+
+        row.addEventListener('click', (e) => {
+          // Keep normal behavior for "Voir" links
+          if (e.target.closest('a')) return;
+          const card = e.target.closest('.card');
+          if (!card) return;
+          const idx = cards.indexOf(card);
+          if (idx < 0) return;
+          goToCardIndex(row, cards, idx, true);
+        });
+
+        row.addEventListener('scroll', () => {
+          carouselIndex.set(row, getCurrentIndex(row, cards));
+        }, { passive: true });
+      });
+
+      // carousel arrows
+      $$('.carousel-nav').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const dir = btn.getAttribute('data-dir');
+          const row = targetId ? document.getElementById(targetId) : null;
+          if (!row) return;
+          const cards = getCards(row);
+          if (!cards.length) return;
+          const current = Number.isInteger(carouselIndex.get(row))
+            ? carouselIndex.get(row)
+            : getCurrentIndex(row, cards);
+          const next = dir === 'left' ? current - 1 : current + 1;
+          goToCardIndex(row, cards, next, true);
+        });
+      });
+
+      // keep same card aligned after resize
+      let carouselResizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(carouselResizeTimer);
+        carouselResizeTimer = setTimeout(() => {
+          carouselRows.forEach((row) => {
+            const cards = getCards(row);
+            if (!cards.length) return;
+            const idx = Number.isInteger(carouselIndex.get(row))
+              ? carouselIndex.get(row)
+              : getCurrentIndex(row, cards);
+            goToCardIndex(row, cards, idx, false);
+          });
+        }, 120);
+      });
+
+      // mobile menu
+      const menuBtn = $('#menuBtn');
+      const navLinks = $('#navLinks');
+      if (menuBtn && navLinks) {
+        menuBtn.setAttribute('aria-expanded','false');
+        menuBtn.addEventListener('click', () => {
+          const open = menuBtn.getAttribute('aria-expanded') === 'true';
+          menuBtn.setAttribute('aria-expanded', String(!open));
+          if (!open) {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
+            navLinks.style.padding = '10px';
+            navLinks.style.borderRadius = '10px';
+            navLinks.setAttribute('aria-hidden','false');
+          } else {
+            navLinks.style.display = 'none';
+            navLinks.setAttribute('aria-hidden','true');
+          }
+        });
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            if (window.innerWidth > 640) {
+              navLinks.style.display = 'flex';
+              navLinks.style.flexDirection = 'row';
+              navLinks.style.background = 'transparent';
+              navLinks.style.padding = '';
+              navLinks.setAttribute('aria-hidden','false');
+              menuBtn.setAttribute('aria-expanded','false');
+            } else {
+              navLinks.style.display = 'none';
+              navLinks.setAttribute('aria-hidden','true');
+            }
+          }, 120);
+        });
+        if (window.innerWidth <= 640) {
+          navLinks.style.display = 'none';
+          navLinks.setAttribute('aria-hidden','true');
+        }
+      }
+
+      // parallax elements
+      blobs = $$('.bg-blob');
+      hero = $('#heroCard');
+      profile = $('#profileCard');
+      document.addEventListener('mousemove', (e) => {
+        pointer.x = (e.clientX / window.innerWidth) - 0.5;
+        pointer.y = (e.clientY / window.innerHeight) - 0.5;
+        const rect = document.body.getBoundingClientRect();
+        pointer.cx = e.clientX - rect.left - window.innerWidth / 2;
+        pointer.cy = e.clientY - rect.top - window.innerHeight / 2;
+        scheduleRaf();
+      });
+
+      // Attach refresh button for RSS
+      const refreshBtn = $('#refreshFeeds');
+      if (refreshBtn) refreshBtn.addEventListener('click', () => {
+        try { localStorage.removeItem(CACHE_KEY); } catch(e){}
+        aggregateFeeds(true);
+      });
+
+      // Veille pagination controls
+      const veillePrev = $('#veillePrev');
+      const veilleNext = $('#veilleNext');
+      const veilleOut = $('#veilleNews');
+      if (veillePrev && veilleOut) {
+        veillePrev.addEventListener('click', () => {
+          if (veillePageState <= 0) return;
+          veillePageState -= 1;
+          drawVeillePage(veilleOut);
+        });
+      }
+      if (veilleNext && veilleOut) {
+        veilleNext.addEventListener('click', () => {
+          const maxPage = Math.max(0, Math.ceil(veilleItemsState.length / VEILLE_PAGE_SIZE) - 1);
+          if (veillePageState >= maxPage) return;
+          veillePageState += 1;
+          drawVeillePage(veilleOut);
+        });
+      }
+
+      // initial feed load
+      aggregateFeeds();
+
+    } catch (err) {
+      console.error('Erreur initialisation JS:', err);
+    }
+  });
+
+  // --- simple helpers for contact / copy --------------------------------------
+
+  window.copyEmail = function(){
+    const email = 'angelino.ferreira1@gmail.com';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(()=> alert('Email copié dans le presse-papier')).catch(()=> fallbackCopy(email));
+    } else fallbackCopy(email);
+    function fallbackCopy(text){
+      const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly',''); t.style.position='absolute'; t.style.left='-9999px';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); alert('Email copié dans le presse-papier'); } catch { alert('Impossible de copier : ' + text); }
+      finally { document.body.removeChild(t); }
+    }
+  };
+
+})();
+  </script>
+</body>
+</html>
+

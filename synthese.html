@@ -1,0 +1,192 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tableau de synthèse — AnGix</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#071022;--card:#0b1220;--muted:#9aa6b2;--accent-from:#5eead4;--accent-to:#60a5fa}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#071022,#0b1426);color:#e6eef6;padding:28px}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-to),var(--accent-from));display:flex;align-items:center;justify-content:center;color:#042033;font-weight:700}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin:6px 0 14px}
+
+    /* PDF viewer area */
+    .pdf-area{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+    .pdf-controls{display:flex;gap:10px;align-items:center}
+    .pdf-controls input[type=file]{display:block}
+    .pdf-note{color:var(--muted);font-size:13px}
+    .pdf-viewer{width:100%;height:640px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);overflow:hidden;background:#071022}
+    .pdf-viewer iframe{width:100%;height:100%;border:0}
+
+    table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
+    thead th{background:rgba(255,255,255,0.02);padding:12px;text-align:left;font-weight:600}
+    tbody td{padding:12px;border-top:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+    .actions{display:flex;gap:10px;margin:12px 0}
+    button{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--accent-from),var(--accent-to));color:#042033}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    a.button-link{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);text-decoration:none}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+
+    @media (max-width:720px){table,thead,tbody,th,td,tr{display:block}thead{display:none}td{padding:8px;border:0;border-bottom:1px solid rgba(255,255,255,0.03)}td::before{content:attr(data-label);display:block;font-weight:700;color:#fff;margin-bottom:6px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logo">AG</div>
+        <div>
+          <h1>Tableau de synthèse</h1>
+          <div class="lead">Zone pour héberger et prévisualiser ton PDF de synthèse.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a href="index.html" style="color:var(--muted);text-decoration:underline">← Retour</a>
+      </div>
+    </header>
+
+    <!-- PDF upload / viewer -->
+    <section class="pdf-area" aria-label="PDF synthese">
+      <div class="pdf-controls">
+        <label for="pdfInput" class="button-link">Choisir un PDF</label>
+        <input id="pdfInput" type="file" accept="application/pdf" style="display:none">
+        <button class="btn-primary" id="useServerPdf">Utiliser synthese.pdf (racine)</button>
+        <a id="downloadPdfLink" class="button-link" href="synthese.pdf" download style="margin-left:auto">Télécharger le PDF</a>
+      </div>
+      <div class="pdf-note">Remarque : pour héberger définitivement le PDF, place ton fichier nommé <strong>synthese.pdf</strong> à la racine du site (même dossier que index.html). Sinon, utilise le bouton "Choisir un PDF" pour prévisualiser localement le fichier (ne sera pas sauvegardé sur le serveur).</div>
+      <div class="pdf-viewer" id="pdfViewerWrap" aria-live="polite">
+        <iframe id="pdfViewer" src="synthese.pdf"></iframe>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="btn-primary" id="downloadCsv">Télécharger CSV</button>
+      <button class="btn-ghost" id="printView">Imprimer / Sauvegarder en PDF</button>
+    </div>
+
+    <table id="syntheseTable" role="table">
+      <thead>
+        <tr>
+          <th>Projet</th>
+          <th>Discipline</th>
+          <th>Technologies</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Projet">Remplacement PV1 ? VIF</td>
+          <td data-label="Discipline">Admin / Infra</td>
+          <td data-label="Technologies">VIF, AXEL, VLAN</td>
+          <td data-label="Statut">Terminé</td>
+        </tr>
+        <tr>
+          <td data-label="Projet">Dashboard de supervision</td>
+          <td data-label="Discipline">Admin / Infra</td>
+          <td data-label="Technologies">HTML, JS, Chart</td>
+          <td data-label="Statut">Prototype</td>
+        </tr>
+        <tr>
+          <td data-label="Projet">Automatisation de tâches</td>
+          <td data-label="Discipline">Admin / Infra</td>
+          <td data-label="Technologies">Bash, Batch</td>
+          <td data-label="Statut">En cours</td>
+        </tr>
+        <tr>
+          <td data-label="Projet">Pentest Web (exercice)</td>
+          <td data-label="Discipline">Cyber</td>
+          <td data-label="Technologies">Burp, OWASP</td>
+          <td data-label="Statut">Terminé</td>
+        </tr>
+        <tr>
+          <td data-label="Projet">Sécurisation VLANs</td>
+          <td data-label="Discipline">Cyber</td>
+          <td data-label="Technologies">Segmentation, ACL</td>
+          <td data-label="Statut">Rapport</td>
+        </tr>
+        <tr>
+          <td data-label="Projet">Hardening Linux</td>
+          <td data-label="Discipline">Cyber</td>
+          <td data-label="Technologies">SSH, sudo, Audit</td>
+          <td data-label="Statut">Checklist</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer>
+      <div>© <span id="year"></span> AnGix — Portfolio BTS SIO</div>
+    </footer>
+  </div>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // PDF viewer logic
+    (function(){
+      const input = document.getElementById('pdfInput');
+      const viewer = document.getElementById('pdfViewer');
+      const useServer = document.getElementById('useServerPdf');
+      const downloadLink = document.getElementById('downloadPdfLink');
+      let currentPdfUrl = 'synthese.pdf';
+
+      // When user selects a file, preview it using object URL
+      input.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        if (file.type !== 'application/pdf') { alert('Veuillez choisir un fichier PDF.'); return; }
+        const url = URL.createObjectURL(file);
+        currentPdfUrl = url;
+        viewer.src = url;
+        downloadLink.href = url;
+        downloadLink.download = file.name || 'synthese_local.pdf';
+      });
+
+      // wire the choose label to input
+      document.querySelector('label[for="pdfInput"]').addEventListener('click', ()=> input.click());
+
+      // use server copy button
+      useServer.addEventListener('click', ()=>{
+        currentPdfUrl = 'synthese.pdf';
+        viewer.src = currentPdfUrl;
+        downloadLink.href = currentPdfUrl;
+        downloadLink.download = 'synthese.pdf';
+      });
+
+      // cleanup object URL when unloading or when switching to server file
+      window.addEventListener('unload', ()=>{
+        if (currentPdfUrl && currentPdfUrl.startsWith('blob:')) URL.revokeObjectURL(currentPdfUrl);
+      });
+
+      // download CSV and print logic preserved
+      function tableToCSV(table){
+        const rows = Array.from(table.querySelectorAll('tr'));
+        return rows.map(r => {
+          const cells = Array.from(r.querySelectorAll('th,td'));
+          return cells.map(c => '"' + c.textContent.replace(/"/g, '""') + '"').join(',');
+        }).join('\n');
+      }
+
+      document.getElementById('downloadCsv').addEventListener('click', ()=>{
+        const table = document.getElementById('syntheseTable');
+        const csv = tableToCSV(table);
+        const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'tableau_synthese.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      });
+
+      document.getElementById('printView').addEventListener('click', ()=>{
+        window.print();
+      });
+
+    })();
+  </script>
+</body>
+</html>
+
