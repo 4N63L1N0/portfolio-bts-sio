@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Projet — Titre du projet</title>
-  <meta name="description" content="Page projet — portfolio">
+  <title>Projet — Infrastructure réseau sécurisée pfSense</title>
+  <meta name="description" content="Mise en place d'une infrastructure réseau sécurisée avec segmentation WAN/LAN via pfSense.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     /* 1) Styles inspirés de la page principale (sobre & créatif) */
@@ -56,16 +56,66 @@
 
     <section class="hero">
       <div class="card">
-        <h1 id="title">Titre du projet</h1>
-        <p class="lead" id="subtitle">Une courte accroche pour présenter le projet.</p>
+        <h1 id="title">Mise en place d'une infrastructure réseau sécurisée avec segmentation WAN/LAN via pfSense</h1>
+        <p class="lead" id="subtitle">Conception d'une architecture segmentée pour isoler l'Active Directory, contrôler les flux inter-réseaux et réduire la surface d'attaque interne d'une PME.</p>
         <div class="meta">
-          <div class="pill" id="disc">Discipline: Admin / Cyber</div>
-          <div class="pill" id="status">Statut: En cours</div>
-          <div class="pill" id="tech">Technos: HTML, JS, Bash</div>
+          <div class="pill" id="disc">Discipline: Cyber / Réseau</div>
+          <div class="pill" id="status">Statut: Réalisé (environnement de lab)</div>
+          <div class="pill" id="tech">Technos: Proxmox VE, pfSense, VLAN, NAT, Firewall stateful</div>
         </div>
 
         <div class="content" id="description">
-          <p>Écris ici la présentation détaillée du projet — contexte, objectifs, étapes réalisées et résultats. Ajoute des captures plus bas pour illustrer.</p>
+          <h2>Contexte 🧭</h2>
+          <p>Dans le cadre d'un scénario PME (25 salariés), l'objectif était de sécuriser l'infrastructure réseau en isolant les services critiques. L'entreprise dispose d'un serveur Active Directory, de postes utilisateurs et d'un accès Internet partagé.</p>
+          <p>Le besoin métier principal était de segmenter les réseaux pour limiter les mouvements latéraux, contrôler les flux inter-zones et appliquer une politique de sécurité centralisée.</p>
+
+          <h3>Mon rôle 🛠️</h3>
+          <p>J'ai conçu et mis en place l'architecture de sécurité autour de pfSense en environnement virtualisé :</p>
+          <ul>
+            <li>🧱 Déployer une VM pfSense sur Proxmox avec interfaces WAN/LAN dédiées.</li>
+            <li>🌐 Structurer les zones réseau : WAN, LAN Utilisateurs (192.168.10.0/24), LAN Serveur (10.0.0.0/24).</li>
+            <li>🔒 Établir une politique firewall restrictive (moindre privilège, filtrage stateful).</li>
+            <li>🧭 Configurer le NAT et les règles de circulation entre zones.</li>
+            <li>📘 Journaliser et vérifier les flux pour valider la conformité des règles.</li>
+            <li>🧪 Réaliser les tests de sécurité et de connectivité (autorisé / bloqué).</li>
+          </ul>
+
+          <h3>Portée & ressources 📦</h3>
+          <p>Le projet a été réalisé en lab sous Proxmox avec une topologie segmentée orientée production :</p>
+          <ul>
+            <li>🖥️ Hyperviseur Proxmox VE.</li>
+            <li>🛡️ Pare-feu pfSense (stateful firewall, NAT, règles inter-zones).</li>
+            <li>🧭 Zones réseau : WAN / LAN Utilisateurs / LAN Serveur.</li>
+            <li>🗂️ Serveur Active Directory isolé dans un sous-réseau dédié.</li>
+            <li>📑 Politique de filtrage documentée par ports et besoins fonctionnels.</li>
+          </ul>
+          <p><strong>Risque traité:</strong> éviter les règles trop ouvertes de type <code>ANY ANY</code> vers l'AD, qui augmentent fortement l'exposition.</p>
+
+          <h3>Résultats / Bilan ✅</h3>
+          <ul>
+            <li>🚧 Flux WAN vers LAN entrants bloqués par défaut.</li>
+            <li>✅ Accès Internet utilisateurs opérationnel avec filtrage.</li>
+            <li>🔐 Accès au serveur AD limité aux ports nécessaires (DNS, Kerberos, LDAP, SMB si requis).</li>
+            <li>🧪 Tests validés : flux autorisés fonctionnels, flux non autorisés bloqués.</li>
+            <li>📉 Réduction mesurable de la surface d'attaque interne grâce à la segmentation.</li>
+          </ul>
+
+          <h3>Compétences acquises 🎯</h3>
+          <ul>
+            <li>🛡️ Conception d'une architecture réseau segmentée orientée sécurité.</li>
+            <li>🌐 Maîtrise des règles pfSense (stateful filtering, NAT, politiques inter-réseaux).</li>
+            <li>🧭 Application du principe du moindre privilège sur des flux réels.</li>
+            <li>📊 Méthodologie de validation sécurité (tests fonctionnels + tests de blocage).</li>
+            <li>🧠 Analyse de risques et choix techniques justifiés en contexte BTS SIO SISR.</li>
+          </ul>
+
+          <h3>Limites identifiées 🔎</h3>
+          <ul>
+            <li>Pas de haute disponibilité firewall.</li>
+            <li>Pas d'IDS/IPS actif dans cette version.</li>
+            <li>Pas de VPN site-to-site déployé.</li>
+            <li>Infrastructure de lab non redondée.</li>
+          </ul>
         </div>
 
         <div class="pdf-area">
@@ -137,4 +187,3 @@
   </script>
 </body>
 </html>
-
