@@ -162,8 +162,22 @@
     .about-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
 
     /* CONTACT */
-    form{display:grid;gap:10px}
-    input,textarea{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:8px;color:#e6eef6}
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px}
+    .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px}
+    .contact-form{display:grid;gap:12px}
+    .field{display:grid;gap:6px}
+    .field label{font-size:13px;color:var(--muted);font-weight:600}
+    input,textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:12px;border-radius:10px;color:#f3f7ff;outline:none;transition:border-color .2s ease, box-shadow .2s ease}
+    input:focus,textarea:focus{border-color:rgba(96,165,250,0.6);box-shadow:0 0 0 3px rgba(96,165,250,0.15)}
+    textarea{resize:vertical;min-height:140px}
+    .contact-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .contact-note{font-size:12px;color:var(--muted)}
+    .contact-list{display:grid;gap:10px;margin-top:10px}
+    .contact-item{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
+    .contact-dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-from),var(--accent-to))}
+    .contact-link{color:var(--muted);text-decoration:none}
+    .contact-link:hover{text-decoration:underline}
+    .contact-title{font-weight:700}
 
     footer{margin-top:36px;color:var(--muted);font-size:13px;text-align:center}
 
@@ -395,27 +409,59 @@
     <!-- Contact -->
     <section id="contact" style="margin-top:28px">
       <h2 class="reveal">Contact</h2>
-      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
-        <form class="reveal" action="https://formsubmit.co/angelino.ferreira1@gmail.com" method="POST">
+      <div class="contact-grid">
+        <form class="contact-card contact-form reveal" action="https://formsubmit.co/angelino.ferreira1@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Nouveau message depuis ton portfolio">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="text" name="_honey" style="display:none">
-          <input type="text" id="name" name="name" placeholder="Ton nom" required>
-          <input type="email" id="email" name="email" placeholder="Ton email" required>
-          <input type="text" id="subject" name="subject" placeholder="Sujet" required>
-          <textarea id="message" name="message" rows="6" placeholder="Ton message" required></textarea>
-          <div style="display:flex;gap:10px">
+          <div class="field">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" placeholder="Ton nom" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Ton email" required>
+          </div>
+          <div class="field">
+            <label for="subject">Sujet</label>
+            <input type="text" id="subject" name="subject" placeholder="Sujet" required>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Ton message" required></textarea>
+          </div>
+          <div class="contact-actions">
             <button class="primary" type="submit">Envoyer</button>
             <button class="secondary" type="button" onclick="copyEmail()">Copier mon email</button>
           </div>
-          <div class="muted" style="font-size:12px">Premier envoi: FormSubmit t'enverra un mail de confirmation pour activer le formulaire.</div>
+          <div class="contact-note">Premier envoi: FormSubmit t'enverra un mail de confirmation pour activer le formulaire.</div>
         </form>
-        <aside class="profile reveal" style="padding:18px">
-          <div style="font-weight:700">Coordonnées</div>
-          <div style="color:var(--muted);margin-top:8px">Email : <a href="mailto:angelino.ferreira1@gmail.com" style="color:var(--muted);text-decoration:underline">angelino.ferreira1@gmail.com</a></div>
-          <div style="color:var(--muted);margin-top:6px">GitHub : <a href="https://github.com/4N63L1N0" style="color:var(--muted);text-decoration:underline">github.com/4N63L1N0</a></div>
-          <div style="color:var(--muted);margin-top:6px">LinkedIn : <a href="https://www.linkedin.com/in/ang%C3%A9lino-ferreira-12553b2b4/" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:underline">linkedin.com/in/angelino-ferreira</a></div>
+        <aside class="contact-card reveal">
+          <div class="contact-title">Coordonnées</div>
+          <div class="contact-list">
+            <div class="contact-item">
+              <span class="contact-dot"></span>
+              <div>
+                <div class="muted">Email</div>
+                <a class="contact-link" href="mailto:angelino.ferreira1@gmail.com">angelino.ferreira1@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-dot"></span>
+              <div>
+                <div class="muted">GitHub</div>
+                <a class="contact-link" href="https://github.com/4N63L1N0">github.com/4N63L1N0</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-dot"></span>
+              <div>
+                <div class="muted">LinkedIn</div>
+                <a class="contact-link" href="https://www.linkedin.com/in/ang%C3%A9lino-ferreira-12553b2b4/" target="_blank" rel="noopener noreferrer">linkedin.com/in/angelino-ferreira</a>
+              </div>
+            </div>
+          </div>
         </aside>
       </div>
     </section>
