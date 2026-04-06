@@ -16,27 +16,30 @@
     a{color:var(--muted);text-decoration:none}
 
     .hero{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-bottom:20px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06));padding:18px;border-radius:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
     h1{margin:0 0 8px}
     p.lead{color:var(--muted);margin:0 0 12px}
 
     /* gallery */
-    .gallery{display:flex;gap:12px;overflow:auto;padding:8px 0}
-    .thumb{min-width:220px;flex:0 0 auto;border-radius:10px;overflow:hidden}
-    .thumb img{width:100%;height:140px;object-fit:cover;display:block}
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:8px 0}
+    .thumb{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);box-shadow:0 10px 24px rgba(2,6,23,0.25)}
+    .thumb img{width:100%;height:140px;object-fit:cover;display:block;filter:saturate(0.95)}
+    .aside-title{font-weight:700;font-size:15px;margin-bottom:10px;color:#f3f7ff}
+    .section-title{font-weight:700;margin-bottom:8px}
+    .estimate-box{margin-top:14px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08)}
+    .estimate-title{font-weight:700;margin-bottom:8px}
+    .estimate-grid{display:flex;flex-direction:column;gap:8px}
+    .estimate-item{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;border:1px solid rgba(255,255,255,0.06)}
+    .estimate-item span{display:block;font-size:12px;color:var(--muted)}
+    .estimate-item strong{display:block;font-size:14px;color:#f3f7ff}
+    .estimate-note{margin-top:8px;font-size:12px;color:var(--muted)}
 
     /* content */
     .content{margin-top:12px;color:var(--muted);line-height:1.5}
     .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .pill{background:rgba(255,255,255,0.10);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
-
-    /* PDF area */
-    .pdf-area{margin-top:16px;background:rgba(255,255,255,0.03);padding:12px;border-radius:10px}
-    .pdf-controls{display:flex;gap:8px;align-items:center}
-
+    .pill{background:rgba(255,255,255,0.10);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
     footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
-
-    @media(max-width:900px){.hero{grid-template-columns:1fr}.gallery{gap:10px}.thumb{min-width:160px}}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.thumb img{height:150px}}
   </style>
 </head>
 <body>
@@ -67,29 +70,27 @@
         <div class="content" id="description">
           <p>Écris ici la présentation détaillée du projet — contexte, objectifs, étapes réalisées et résultats. Ajoute des captures plus bas pour illustrer.</p>
         </div>
-
-        <div class="pdf-area">
-          <div style="font-weight:700;margin-bottom:8px">PDF / Rapport</div>
-          <div class="pdf-controls">
-            <input type="file" id="pdfInput" accept="application/pdf">
-            <button id="previewPdf">Prévisualiser</button>
-            <a id="downloadPdf" href="#" download style="display:none">Télécharger le PDF</a>
-          </div>
-          <div id="pdfPreview" style="margin-top:12px;display:none">
-            <iframe id="pdfFrame" src="" width="100%" height="400" style="border:0;border-radius:8px"></iframe>
-          </div>
-        </div>
-
       </div>
 
       <aside class="card">
-        <div style="font-weight:700;margin-bottom:8px">Galerie</div>
+        <div class="aside-title">Ressources du projet</div>
+        <div class="section-title">Galerie</div>
         <div class="gallery" id="gallery">
           <div class="thumb"><img data-src="images/placeholder1.jpg" alt="illustration 1" loading="lazy"></div>
           <div class="thumb"><img data-src="images/placeholder2.jpg" alt="illustration 2" loading="lazy"></div>
           <div class="thumb"><img data-src="images/placeholder3.jpg" alt="illustration 3" loading="lazy"></div>
         </div>
         <div style="margin-top:10px;color:var(--muted);font-size:13px">Clique sur une miniature pour l'ouvrir en grand.</div>
+        <div class="estimate-box">
+          <div class="section-title">Estimation (temps & coût)</div>
+          <div class="estimate-grid">
+            <div class="estimate-item"><span>Temps - préparation</span><strong>À renseigner</strong></div>
+            <div class="estimate-item"><span>Temps - mise en place</span><strong>À renseigner</strong></div>
+            <div class="estimate-item"><span>Temps total</span><strong>À renseigner</strong></div>
+            <div class="estimate-item"><span>Coût estimé</span><strong>À renseigner</strong></div>
+          </div>
+          <div class="estimate-note">De la préparation à la mise en place (si projet terminé).</div>
+        </div>
       </aside>
     </section>
 
@@ -115,22 +116,6 @@
     });
     document.getElementById('lightbox').addEventListener('click', ()=>{ document.getElementById('lightbox').style.display='none'; });
 
-    // PDF upload & preview
-    const pdfInput = document.getElementById('pdfInput');
-    const previewBtn = document.getElementById('previewPdf');
-    const pdfFrame = document.getElementById('pdfFrame');
-    const pdfPreview = document.getElementById('pdfPreview');
-    const downloadPdf = document.getElementById('downloadPdf');
-    let pdfUrl = null;
-
-    pdfInput.addEventListener('change', (e)=>{
-      const file = e.target.files[0]; if(!file) return; if(pdfUrl) URL.revokeObjectURL(pdfUrl); pdfUrl = URL.createObjectURL(file); downloadPdf.href = pdfUrl; downloadPdf.style.display='inline-block'; downloadPdf.textContent = 'Télécharger le PDF';
-    });
-
-    previewBtn.addEventListener('click', ()=>{
-      if(!pdfInput.files[0]){ alert('Choisis d\'abord un fichier PDF.'); return; }
-      pdfFrame.src = pdfUrl; pdfPreview.style.display = 'block';
-    });
 
     // ready to be edited: replace texts and images per projet
     // Example usage: change innerText / src dynamically if you generate pages
