@@ -391,7 +391,7 @@
     <!-- Veille -->
     <section id="veille" class="mt-28">
       <h2 class="reveal">Veille</h2>
-      <p class="lead reveal">Flux RSS agrégés automatiquement — derniers articles récents.</p>
+      <p class="lead reveal">Flux RSS agrégés automatiquement — sélection d'articles cybersécurité pertinents.</p>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:12px">
         <div id="veilleStatus" class="muted">Chargement des flux…</div>
@@ -502,9 +502,9 @@
   const FEEDS = [
     'https://www.zdnet.com/topic/security/rss.xml',
     'https://feeds.feedburner.com/TheHackersNews',
-    'https://www.reddit.com/r/sysadmin/.rss'
+    'https://krebsonsecurity.com/feed/'
   ];
-  const CACHE_KEY = 'veille_cache_v1';
+  const CACHE_KEY = 'veille_cache_v2';
   const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
   const FETCH_TIMEOUT_MS = 9000;
   const PROXIES = [
@@ -515,6 +515,27 @@
   const VEILLE_PAGE_SIZE = 6;
   let veilleItemsState = [];
   let veillePageState = 0;
+  const RELEVANCE_MIN_SCORE = 8;
+
+  const CYBER_KEYWORDS_STRONG = [
+    'cybersecurite','securite informatique','cyberattaque','attaque','incident',
+    'ransomware','malware','virus','trojan','exploit','vulnerabilite','vuln',
+    'zero day','zero-day','phishing','ddos','intrusion','breach','fuite de donnees',
+    'backdoor','botnet','patch','cve-','xss','sqli','injection sql',
+    'pentest','red team','blue team','hardening','soc','siem','edr','firewall','forensic'
+  ];
+  const CYBER_KEYWORDS_WEAK = [
+    'security','cyber','authentification','authentication','mfa','2fa','iam',
+    'chiffrement','encryption','tls','ssl','vpn','securise','securisation'
+  ];
+  const NOISE_KEYWORDS = [
+    'smartphone','iphone','android','gaming','jeu video','netflix','streaming',
+    'marketing','crypto prix','influenceur','people','musique'
+  ];
+  const TRUSTED_SECURITY_SOURCES = [
+    'thehackersnews','krebsonsecurity','bleepingcomputer','securityweek',
+    'zdnet'
+  ];
 
   function saveCache(data){
     try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e){}
@@ -567,6 +588,74 @@
     if (!value) return null;
     const d = new Date(String(value).trim());
     return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+
+  function normalizeForSearch(value){
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function countMatches(text, keywords){
+    let count = 0;
+    for (const kw of keywords) {
+      if (text.includes(kw)) count += 1;
+    }
+    return count;
+  }
+
+  function computeCyberRelevance(item){
+    const title = normalizeForSearch(item.title);
+    const excerpt = normalizeForSearch(item.excerpt);
+    const source = normalizeForSearch(sourceLabel(item.source || item.link || ''));
+    const text = `${title} ${excerpt}`.trim();
+
+    const strong = countMatches(text, CYBER_KEYWORDS_STRONG);
+    const weak = countMatches(text, CYBER_KEYWORDS_WEAK);
+    const noise = countMatches(text, NOISE_KEYWORDS);
+    const hasCve = /\bcve-\d{4}-\d{4,}\b/.test(text);
+
+    let score = 0;
+    score += strong * 6;
+    score += weak * 2;
+    if (hasCve) score += 10;
+    if (TRUSTED_SECURITY_SOURCES.some(s => source.includes(s))) score += 3;
+    score -= noise * 5;
+
+    if (item.pubDate) {
+      const ageDays = Math.max(0, (Date.now() - new Date(item.pubDate).getTime()) / 86400000);
+      if (ageDays <= 7) score += 5;
+      else if (ageDays <= 30) score += 4;
+      else if (ageDays <= 90) score += 3;
+      else if (ageDays <= 180) score += 2;
+      else score += 1;
+    }
+
+    const isCyber = hasCve || strong > 0 || weak >= 2;
+    return { score, isCyber };
+  }
+
+  function rankAndFilterCyberItems(items){
+    const dedup = new Map();
+    for (const item of items) {
+      const key = normalizeForSearch(item.link || item.title);
+      if (!key) continue;
+      if (!dedup.has(key)) dedup.set(key, item);
+    }
+
+    return Array.from(dedup.values())
+      .map((item) => {
+        const { score, isCyber } = computeCyberRelevance(item);
+        return { ...item, relevanceScore: score, isCyber };
+      })
+      .filter((item) => item.title && item.link && item.isCyber && item.relevanceScore >= RELEVANCE_MIN_SCORE)
+      .sort((a, b) => {
+        if (b.relevanceScore !== a.relevanceScore) return b.relevanceScore - a.relevanceScore;
+        return (b.pubDate || '').localeCompare(a.pubDate || '');
+      });
   }
 
   function parseFeed(xmlText, sourceUrl){
@@ -717,13 +806,13 @@
       results.forEach(arr => all.push(...arr));
       const normalized = all
         .map(i => ({ ...i, pubDate: safeIsoDate(i.pubDate) }))
-        .filter(i => i.title && i.link)
-        .sort((a,b) => (b.pubDate || '').localeCompare(a.pubDate || ''));
-      const top = normalized.slice(0, 12);
+        .filter(i => i.title && i.link);
+      const ranked = rankAndFilterCyberItems(normalized);
+      const top = ranked.slice(0, 24);
       top._cachedAt = Date.now();
       try { saveCache(top); } catch(e){}
       renderItems(top, outEl);
-      statusEl.textContent = `${top.length} articles • mis à jour à ${new Date().toLocaleTimeString()}`;
+      statusEl.textContent = `${top.length} articles cyber pertinents (sur ${normalized.length}) • mis à jour à ${new Date().toLocaleTimeString()}`;
     } catch (err) {
       console.error('Erreur agrégation flux:', err);
       const stale = loadCache(true);
