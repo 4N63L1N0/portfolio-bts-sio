@@ -71,97 +71,61 @@
         </div>
 
         <div class="content" id="description">
-          <h2>1. Description du projet</h2>
-          <p>Ce projet consiste à transformer un homelab Docker en environnement quasi-professionnel, pensé pour héberger plusieurs services internes (dashboard, monitoring, outils d'administration) avec un accès centralisé et sécurisé. L'objectif n'est pas seulement de "faire tourner des conteneurs", mais de démontrer une approche cybersécurité: minimiser l'exposition directe, imposer une authentification forte en frontal, et standardiser les flux via un point d'entrée unique.</p>
+          <h2>Contexte</h2>
+          <p>Homelab Docker professionnalisé pour héberger plusieurs services (dashboard, monitoring, outils admin) avec une approche cybersécurité: point d'entrée unique, authentification centralisée et exposition contrôlée.</p>
 
-          <h2>2. Architecture détaillée</h2>
+          <h3>Mon rôle</h3>
           <ul>
-            <li><strong>Hôte Docker</strong>: exécution des services applicatifs en conteneurs isolés.</li>
-            <li><strong>Nginx Proxy Manager (NPM)</strong>: point d'entrée HTTP/HTTPS unique, routage vers les services internes.</li>
-            <li><strong>Authelia</strong>: portail d'authentification centralisée (MFA/2FA possible), protection des applications sensibles avant accès.</li>
-            <li><strong>Services internes</strong>: dashboard, monitoring, utilitaires DevOps exposés uniquement via NPM.</li>
-            <li><strong>DNS local / split-DNS</strong>: résolution interne des noms de services sans exposition inutile sur Internet.</li>
-            <li><strong>Accès distant (optionnel)</strong>: publication contrôlée de certains services, avec filtrage, authentification et chiffrement.</li>
+            <li>Concevoir l'architecture et les flux d'accès.</li>
+            <li>Déployer Nginx Proxy Manager (reverse proxy + TLS).</li>
+            <li>Intégrer Authelia pour protéger les services sensibles.</li>
+            <li>Documenter les risques et contre-mesures.</li>
           </ul>
 
-          <h2>3. Analyse cybersécurité</h2>
-          <h3>Surface d'attaque</h3>
+          <h3>Architecture</h3>
           <ul>
-            <li>Exposition des ports 80/443 du reverse proxy.</li>
-            <li>Interfaces d'administration (NPM, Authelia, dashboard).</li>
-            <li>Comptes utilisateurs et secrets applicatifs.</li>
-            <li>Risque de mauvaise configuration réseau entre conteneurs.</li>
-            <li>Risque lié à l'accès distant (brute force, credential stuffing, scanning automatisé).</li>
+            <li>Entrée unique via Nginx Proxy Manager (80/443).</li>
+            <li>Authentification en frontal via Authelia (MFA possible).</li>
+            <li>Services exposés uniquement derrière le reverse proxy.</li>
+            <li>Isolation via réseaux Docker dédiés.</li>
           </ul>
 
-          <h3>Protections mises en place</h3>
+          <h3>Analyse cybersécurité</h3>
           <ul>
-            <li>Centralisation des flux entrants sur un seul composant (NPM).</li>
-            <li>Authentification en frontal avec Authelia pour les services sensibles.</li>
-            <li>Réduction de l'exposition directe des services (non publiés individuellement).</li>
-            <li>Utilisation de TLS sur les endpoints publiés.</li>
-            <li>Séparation logique des services via réseaux Docker dédiés.</li>
-            <li>Principe du moindre privilège sur les accès d'administration.</li>
+            <li><strong>Surface d'attaque:</strong> proxy web, interfaces admin, secrets applicatifs, accès distant.</li>
+            <li><strong>Protections:</strong> contrôle d'accès centralisé, TLS, segmentation, moindre privilège.</li>
+            <li><strong>Risques résiduels:</strong> erreur de configuration, retard de patching, absence de WAF/IDS.</li>
           </ul>
 
-          <h3>Risques potentiels résiduels</h3>
-          <ul>
-            <li>Point de défaillance unique: reverse proxy compromis = impact transversal.</li>
-            <li>Erreurs de configuration (routes, bypass d'authentification, headers de sécurité incomplets).</li>
-            <li>Mises à jour tardives des images Docker et dépendances.</li>
-            <li>Protection encore limitée si absence de WAF, IDS/IPS et supervision de logs avancée.</li>
-            <li>Gestion des secrets à renforcer si stockage en clair dans des fichiers Compose.</li>
-          </ul>
-
-          <h2>4. Schéma d'architecture (Mermaid)</h2>
+          <h3>Schéma d'architecture (Mermaid)</h3>
           <pre><code>flowchart LR
-    U[Utilisateur local / distant] -->|HTTPS| RP[Nginx Proxy Manager]
-    RP -->|Forward auth| AU[Authelia]
-    RP --> D[Dashboard]
-    RP --> M[Monitoring]
-    RP --> O[Autres services Docker]
+    U[Utilisateur] -->|HTTPS| RP[Nginx Proxy Manager]
+    RP -->|Auth| AU[Authelia]
+    RP --> S[Services Docker]</code></pre>
 
-    subgraph Host[Hote Docker]
-      RP
-      AU
-      D
-      M
-      O
-    end
-
-    DNS[DNS local / split-DNS] --> U
-    FW[Filtrage reseau/NAT] --> RP</code></pre>
-
-          <h2>5. Bonnes pratiques appliquées</h2>
+          <h3>Bonnes pratiques appliquées</h3>
           <ul>
-            <li>Single entry point pour le trafic web (reverse proxy).</li>
-            <li>Contrôle d'accès centralisé avant exposition des applications.</li>
-            <li>Chiffrement TLS et homogénéisation des accès via FQDN.</li>
-            <li>Isolation logique des services par réseaux Docker.</li>
-            <li>Documentation de l'architecture et des flux autorisés.</li>
-            <li>Approche incrémentale: d'abord local sécurisé, puis ouverture distante maîtrisée.</li>
+            <li>Point d'entrée unique pour tous les services web.</li>
+            <li>Authentification avant exposition des applications.</li>
+            <li>Chiffrement TLS et normalisation des accès.</li>
+            <li>Documentation des composants critiques.</li>
           </ul>
 
-          <h2>6. Compétences démontrées</h2>
+          <h3>Compétences démontrées</h3>
           <ul>
-            <li>Conception d'architecture sécurisée en environnement conteneurisé.</li>
-            <li>Mise en place de reverse proxy et authentification fédérée.</li>
-            <li>Analyse de surface d'attaque et priorisation des risques.</li>
-            <li>Hardening de base d'un homelab exposable en conditions réelles.</li>
-            <li>Documentation technique orientée exploitabilité et audit.</li>
+            <li>Architecture sécurisée en environnement conteneurisé.</li>
+            <li>Reverse proxy, SSO/MFA et hardening de base.</li>
+            <li>Analyse de risques orientée exploitation réelle.</li>
           </ul>
 
-          <h2>7. Version courte pour CV</h2>
-          <p><strong>Homelab Docker sécurisé (Nginx Proxy Manager + Authelia)</strong> — Conception et déploiement d'une infrastructure conteneurisée avec point d'entrée unique, authentification centralisée et exposition contrôlée des services. Réduction de la surface d'attaque, chiffrement TLS, segmentation logique et documentation sécurité de l'architecture.</p>
+          <h3>Version courte pour CV</h3>
+          <p><strong>Homelab Docker sécurisé (NPM + Authelia)</strong>: déploiement d'une infrastructure conteneurisée avec reverse proxy, authentification centralisée, TLS et réduction de la surface d'attaque.</p>
 
-          <h2>Bonus — Améliorations pour renforcer l'impact recruteur cyber</h2>
+          <h3>Améliorations possibles</h3>
           <ul>
-            <li>Ajouter un <strong>SIEM léger</strong> (Wazuh/Elastic) pour corrélation des logs NPM, Authelia et système.</li>
-            <li>Mettre en place un <strong>WAF</strong> (ModSecurity/Coraza) devant les services exposés.</li>
-            <li>Automatiser le <strong>hardening et les déploiements</strong> via Ansible + CI/CD.</li>
-            <li>Intégrer du <strong>scan de vulnérabilités</strong> (Trivy, Grype) dans la chaîne de build.</li>
-            <li>Externaliser les secrets vers <strong>Vault / SOPS</strong> au lieu de variables statiques.</li>
-            <li>Mettre en place des <strong>tests de reprise</strong> (backup/restauration) et un runbook d'incident.</li>
+            <li>Ajouter SIEM (Wazuh/Elastic) et alerting sécurité.</li>
+            <li>Intégrer un scan de vulnérabilités des images (Trivy).</li>
+            <li>Externaliser les secrets (Vault/SOPS) et automatiser (Ansible).</li>
           </ul>
         </div>
       </div>
