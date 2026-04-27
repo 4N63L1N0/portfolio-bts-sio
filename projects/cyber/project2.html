@@ -97,12 +97,6 @@
             <li><strong>Risques résiduels:</strong> erreur de configuration, retard de patching, absence de WAF/IDS.</li>
           </ul>
 
-          <h3>Schéma d'architecture (Mermaid)</h3>
-          <pre><code>flowchart LR
-    U[Utilisateur] -->|HTTPS| RP[Nginx Proxy Manager]
-    RP -->|Auth| AU[Authelia]
-    RP --> S[Services Docker]</code></pre>
-
           <h3>Bonnes pratiques appliquées</h3>
           <ul>
             <li>Point d'entrée unique pour tous les services web.</li>
@@ -117,9 +111,6 @@
             <li>Reverse proxy, SSO/MFA et hardening de base.</li>
             <li>Analyse de risques orientée exploitation réelle.</li>
           </ul>
-
-          <h3>Version courte pour CV</h3>
-          <p><strong>Homelab Docker sécurisé (NPM + Authelia)</strong>: déploiement d'une infrastructure conteneurisée avec reverse proxy, authentification centralisée, TLS et réduction de la surface d'attaque.</p>
 
           <h3>Améliorations possibles</h3>
           <ul>
