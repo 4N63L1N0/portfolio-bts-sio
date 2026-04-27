@@ -79,7 +79,6 @@
             <li>🧱 Concevoir l'architecture et les flux d'accès.</li>
             <li>🌐 Déployer Nginx Proxy Manager (reverse proxy + TLS).</li>
             <li>🔐 Intégrer Authelia pour protéger les services sensibles.</li>
-            <li>📑 Documenter les risques et contre-mesures.</li>
           </ul>
 
           <h3>Architecture 🏗️</h3>
@@ -93,29 +92,28 @@
           <h3>Analyse cybersécurité 🔎</h3>
           <ul>
             <li>⚠️ <strong>Surface d'attaque:</strong> proxy web, interfaces admin, secrets applicatifs, accès distant.</li>
-            <li>✅ <strong>Protections:</strong> contrôle d'accès centralisé, TLS, segmentation, moindre privilège.</li>
-            <li>🚨 <strong>Risques résiduels:</strong> erreur de configuration, retard de patching, absence de WAF/IDS.</li>
+            <li>✅ <strong>Protections:</strong> contrôle d'accès centralisé, segmentation, moindre privilège.</li>
+            <li>🚨 <strong>Risques résiduels:</strong> erreur de configuration.</li>
           </ul>
 
           <h3>Bonnes pratiques appliquées 📋</h3>
           <ul>
             <li>🎯 Point d'entrée unique pour tous les services web.</li>
             <li>🔐 Authentification avant exposition des applications.</li>
-            <li>🔒 Chiffrement TLS et normalisation des accès.</li>
-            <li>🧾 Documentation des composants critiques.</li>
+            <li>🔒 Normalisation des accès.</li>
           </ul>
 
           <h3>Compétences démontrées 🎯</h3>
           <ul>
             <li>🛡️ Architecture sécurisée en environnement conteneurisé.</li>
-            <li>🌐 Reverse proxy, SSO/MFA et hardening de base.</li>
+            <li>🌐 Reverse proxy, MFA.</li>
             <li>📊 Analyse de risques orientée exploitation réelle.</li>
           </ul>
 
           <h3>Améliorations possibles 🚀</h3>
           <ul>
             <li>📡 Ajouter SIEM (Wazuh/Elastic) et alerting sécurité.</li>
-            <li>🧪 Intégrer un scan de vulnérabilités des images (Trivy).</li>
+            <li>🧪 Authentification en frontal a double facteur (MFA possible)</li>
             <li>🔑 Externaliser les secrets (Vault/SOPS) et automatiser (Ansible).</li>
           </ul>
         </div>
@@ -134,10 +132,10 @@
           <div class="section-title">Estimation (temps & coût)</div>
           <div class="estimate-grid">
             <div class="estimate-item"><span>Temps - préparation</span><strong>8 h</strong></div>
-            <div class="estimate-item"><span>Temps - implémentation</span><strong>18 h</strong></div>
+            <div class="estimate-item"><span>Temps - implémentation</span><strong>20 h</strong></div>
             <div class="estimate-item"><span>Temps - sécurisation & tests</span><strong>12 h</strong></div>
-            <div class="estimate-item"><span>Temps total</span><strong>38 h</strong></div>
-            <div class="estimate-item"><span>Coût estimé</span><strong>≈ 350 € (matériel existant hors coût)</strong></div>
+            <div class="estimate-item"><span>Temps total</span><strong>40 h</strong></div>
+            <div class="estimate-item"><span>Coût estimé</span><strong>≈ 370 € (matériel existant hors coût)</strong></div>
           </div>
           <div class="estimate-note">Estimation basée sur un homelab personnel avec outillage open source.</div>
         </div>
