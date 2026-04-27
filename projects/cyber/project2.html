@@ -3,11 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Projet — Titre du projet</title>
-  <meta name="description" content="Page projet — portfolio">
+  <title>Projet — Homelab Docker sécurisé (Nginx Proxy Manager + Authelia)</title>
+  <meta name="description" content="Conception d'un homelab Docker professionnalisé orienté cybersécurité avec reverse proxy, SSO et exposition maîtrisée des services.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* 1) Styles inspirés de la page principale (sobre & créatif) */
     :root{--bg:#0c1424;--muted:#c4d0e2;--accent-from:#5eead4;--accent-to:#60a5fa}
     *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#f3f7ff}
     .wrap{max-width:1100px;margin:28px auto;padding:20px;position:relative}
@@ -20,24 +19,28 @@
     h1{margin:0 0 8px}
     p.lead{color:var(--muted);margin:0 0 12px}
 
-    /* gallery */
     .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:8px 0}
     .thumb{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);box-shadow:0 10px 24px rgba(2,6,23,0.25)}
     .thumb img{width:100%;height:140px;object-fit:cover;display:block;filter:saturate(0.95)}
     .aside-title{font-weight:700;font-size:15px;margin-bottom:10px;color:#f3f7ff}
     .section-title{font-weight:700;margin-bottom:8px}
     .estimate-box{margin-top:14px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08)}
-    .estimate-title{font-weight:700;margin-bottom:8px}
     .estimate-grid{display:flex;flex-direction:column;gap:8px}
     .estimate-item{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;border:1px solid rgba(255,255,255,0.06)}
     .estimate-item span{display:block;font-size:12px;color:var(--muted)}
     .estimate-item strong{display:block;font-size:14px;color:#f3f7ff}
     .estimate-note{margin-top:8px;font-size:12px;color:var(--muted)}
 
-    /* content */
-    .content{margin-top:12px;color:var(--muted);line-height:1.5}
+    .content{margin-top:12px;color:var(--muted);line-height:1.6}
+    .content h2,.content h3{color:#f3f7ff;margin-top:18px}
+    .content ul{padding-left:20px}
+    .content li{margin:6px 0}
+    .content pre{background:rgba(3,10,22,0.9);border:1px solid rgba(255,255,255,0.12);padding:12px;border-radius:10px;overflow:auto;color:#d7e5ff}
+    .content code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+
     .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .pill{background:rgba(255,255,255,0.10);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+    .pill{background:rgba(255,255,255,0.10);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+
     footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
     @media(max-width:900px){.hero{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.thumb img{height:150px}}
   </style>
@@ -59,16 +62,107 @@
 
     <section class="hero">
       <div class="card">
-        <h1 id="title">Titre du projet</h1>
-        <p class="lead" id="subtitle">Une courte accroche pour présenter le projet.</p>
+        <h1 id="title">Homelab Docker sécurisé: reverse proxy, SSO et exposition maîtrisée des services</h1>
+        <p class="lead" id="subtitle">Professionnalisation d'un homelab personnel en plateforme d'hébergement orientée cybersécurité, avec contrôle d'accès centralisé, segmentation logique et réduction de la surface d'attaque.</p>
         <div class="meta">
-          <div class="pill" id="disc">Discipline: Admin / Cyber</div>
-          <div class="pill" id="status">Statut: En cours</div>
-          <div class="pill" id="tech">Technos: HTML, JS, Bash</div>
+          <div class="pill" id="disc">Discipline: Cyber / Infrastructure</div>
+          <div class="pill" id="status">Statut: Réalisé / Améliorable</div>
+          <div class="pill" id="tech">Technos: Docker, Docker Compose, Nginx Proxy Manager, Authelia, DNS local</div>
         </div>
 
         <div class="content" id="description">
-          <p>Écris ici la présentation détaillée du projet — contexte, objectifs, étapes réalisées et résultats. Ajoute des captures plus bas pour illustrer.</p>
+          <h2>1. Description du projet</h2>
+          <p>Ce projet consiste à transformer un homelab Docker en environnement quasi-professionnel, pensé pour héberger plusieurs services internes (dashboard, monitoring, outils d'administration) avec un accès centralisé et sécurisé. L'objectif n'est pas seulement de "faire tourner des conteneurs", mais de démontrer une approche cybersécurité: minimiser l'exposition directe, imposer une authentification forte en frontal, et standardiser les flux via un point d'entrée unique.</p>
+
+          <h2>2. Architecture détaillée</h2>
+          <ul>
+            <li><strong>Hôte Docker</strong>: exécution des services applicatifs en conteneurs isolés.</li>
+            <li><strong>Nginx Proxy Manager (NPM)</strong>: point d'entrée HTTP/HTTPS unique, routage vers les services internes.</li>
+            <li><strong>Authelia</strong>: portail d'authentification centralisée (MFA/2FA possible), protection des applications sensibles avant accès.</li>
+            <li><strong>Services internes</strong>: dashboard, monitoring, utilitaires DevOps exposés uniquement via NPM.</li>
+            <li><strong>DNS local / split-DNS</strong>: résolution interne des noms de services sans exposition inutile sur Internet.</li>
+            <li><strong>Accès distant (optionnel)</strong>: publication contrôlée de certains services, avec filtrage, authentification et chiffrement.</li>
+          </ul>
+
+          <h2>3. Analyse cybersécurité</h2>
+          <h3>Surface d'attaque</h3>
+          <ul>
+            <li>Exposition des ports 80/443 du reverse proxy.</li>
+            <li>Interfaces d'administration (NPM, Authelia, dashboard).</li>
+            <li>Comptes utilisateurs et secrets applicatifs.</li>
+            <li>Risque de mauvaise configuration réseau entre conteneurs.</li>
+            <li>Risque lié à l'accès distant (brute force, credential stuffing, scanning automatisé).</li>
+          </ul>
+
+          <h3>Protections mises en place</h3>
+          <ul>
+            <li>Centralisation des flux entrants sur un seul composant (NPM).</li>
+            <li>Authentification en frontal avec Authelia pour les services sensibles.</li>
+            <li>Réduction de l'exposition directe des services (non publiés individuellement).</li>
+            <li>Utilisation de TLS sur les endpoints publiés.</li>
+            <li>Séparation logique des services via réseaux Docker dédiés.</li>
+            <li>Principe du moindre privilège sur les accès d'administration.</li>
+          </ul>
+
+          <h3>Risques potentiels résiduels</h3>
+          <ul>
+            <li>Point de défaillance unique: reverse proxy compromis = impact transversal.</li>
+            <li>Erreurs de configuration (routes, bypass d'authentification, headers de sécurité incomplets).</li>
+            <li>Mises à jour tardives des images Docker et dépendances.</li>
+            <li>Protection encore limitée si absence de WAF, IDS/IPS et supervision de logs avancée.</li>
+            <li>Gestion des secrets à renforcer si stockage en clair dans des fichiers Compose.</li>
+          </ul>
+
+          <h2>4. Schéma d'architecture (Mermaid)</h2>
+          <pre><code>flowchart LR
+    U[Utilisateur local / distant] -->|HTTPS| RP[Nginx Proxy Manager]
+    RP -->|Forward auth| AU[Authelia]
+    RP --> D[Dashboard]
+    RP --> M[Monitoring]
+    RP --> O[Autres services Docker]
+
+    subgraph Host[Hote Docker]
+      RP
+      AU
+      D
+      M
+      O
+    end
+
+    DNS[DNS local / split-DNS] --> U
+    FW[Filtrage reseau/NAT] --> RP</code></pre>
+
+          <h2>5. Bonnes pratiques appliquées</h2>
+          <ul>
+            <li>Single entry point pour le trafic web (reverse proxy).</li>
+            <li>Contrôle d'accès centralisé avant exposition des applications.</li>
+            <li>Chiffrement TLS et homogénéisation des accès via FQDN.</li>
+            <li>Isolation logique des services par réseaux Docker.</li>
+            <li>Documentation de l'architecture et des flux autorisés.</li>
+            <li>Approche incrémentale: d'abord local sécurisé, puis ouverture distante maîtrisée.</li>
+          </ul>
+
+          <h2>6. Compétences démontrées</h2>
+          <ul>
+            <li>Conception d'architecture sécurisée en environnement conteneurisé.</li>
+            <li>Mise en place de reverse proxy et authentification fédérée.</li>
+            <li>Analyse de surface d'attaque et priorisation des risques.</li>
+            <li>Hardening de base d'un homelab exposable en conditions réelles.</li>
+            <li>Documentation technique orientée exploitabilité et audit.</li>
+          </ul>
+
+          <h2>7. Version courte pour CV</h2>
+          <p><strong>Homelab Docker sécurisé (Nginx Proxy Manager + Authelia)</strong> — Conception et déploiement d'une infrastructure conteneurisée avec point d'entrée unique, authentification centralisée et exposition contrôlée des services. Réduction de la surface d'attaque, chiffrement TLS, segmentation logique et documentation sécurité de l'architecture.</p>
+
+          <h2>Bonus — Améliorations pour renforcer l'impact recruteur cyber</h2>
+          <ul>
+            <li>Ajouter un <strong>SIEM léger</strong> (Wazuh/Elastic) pour corrélation des logs NPM, Authelia et système.</li>
+            <li>Mettre en place un <strong>WAF</strong> (ModSecurity/Coraza) devant les services exposés.</li>
+            <li>Automatiser le <strong>hardening et les déploiements</strong> via Ansible + CI/CD.</li>
+            <li>Intégrer du <strong>scan de vulnérabilités</strong> (Trivy, Grype) dans la chaîne de build.</li>
+            <li>Externaliser les secrets vers <strong>Vault / SOPS</strong> au lieu de variables statiques.</li>
+            <li>Mettre en place des <strong>tests de reprise</strong> (backup/restauration) et un runbook d'incident.</li>
+          </ul>
         </div>
       </div>
 
@@ -76,20 +170,21 @@
         <div class="aside-title">Ressources du projet</div>
         <div class="section-title">Galerie</div>
         <div class="gallery" id="gallery">
-          <div class="thumb"><img data-src="images/placeholder1.jpg" alt="illustration 1" loading="lazy"></div>
-          <div class="thumb"><img data-src="images/placeholder2.jpg" alt="illustration 2" loading="lazy"></div>
-          <div class="thumb"><img data-src="images/placeholder3.jpg" alt="illustration 3" loading="lazy"></div>
+          <div class="thumb"><img data-src="../images/placeholder1.jpg" alt="Vue d'ensemble homelab" loading="lazy"></div>
+          <div class="thumb"><img data-src="../images/schema_reseaux.png" alt="Schéma réseau" loading="lazy"></div>
+          <div class="thumb"><img data-src="../images/placeholder1.jpg" alt="Illustration infrastructure" loading="lazy"></div>
         </div>
         <div style="margin-top:10px;color:var(--muted);font-size:13px">Clique sur une miniature pour l'ouvrir en grand.</div>
         <div class="estimate-box">
           <div class="section-title">Estimation (temps & coût)</div>
           <div class="estimate-grid">
-            <div class="estimate-item"><span>Temps - préparation</span><strong>À renseigner</strong></div>
-            <div class="estimate-item"><span>Temps - mise en place</span><strong>À renseigner</strong></div>
-            <div class="estimate-item"><span>Temps total</span><strong>À renseigner</strong></div>
-            <div class="estimate-item"><span>Coût estimé</span><strong>À renseigner</strong></div>
+            <div class="estimate-item"><span>Temps - préparation</span><strong>8 h</strong></div>
+            <div class="estimate-item"><span>Temps - implémentation</span><strong>18 h</strong></div>
+            <div class="estimate-item"><span>Temps - sécurisation & tests</span><strong>12 h</strong></div>
+            <div class="estimate-item"><span>Temps total</span><strong>38 h</strong></div>
+            <div class="estimate-item"><span>Coût estimé</span><strong>≈ 350 € (matériel existant hors coût)</strong></div>
           </div>
-          <div class="estimate-note">De la préparation à la mise en place (si projet terminé).</div>
+          <div class="estimate-note">Estimation basée sur un homelab personnel avec outillage open source.</div>
         </div>
       </aside>
     </section>
@@ -104,21 +199,24 @@
   </div>
 
   <script>
-    // 1) small helpers
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // lazy load gallery images
-    document.querySelectorAll('.gallery img').forEach(img => { const src = img.getAttribute('data-src'); if(src){ img.src = src; } });
-
-    // lightbox
-    document.getElementById('gallery').addEventListener('click', (e) => {
-      const img = e.target.closest('img'); if(!img) return; const lb = document.getElementById('lightbox'); document.getElementById('lightboxImg').src = img.src; lb.style.display = 'flex';
+    document.querySelectorAll('.gallery img').forEach(img => {
+      const src = img.getAttribute('data-src');
+      if (src) img.src = src;
     });
-    document.getElementById('lightbox').addEventListener('click', ()=>{ document.getElementById('lightbox').style.display='none'; });
 
+    document.getElementById('gallery').addEventListener('click', (e) => {
+      const img = e.target.closest('img');
+      if (!img) return;
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightboxImg').src = img.src;
+      lb.style.display = 'flex';
+    });
 
-    // ready to be edited: replace texts and images per projet
-    // Example usage: change innerText / src dynamically if you generate pages
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').style.display = 'none';
+    });
   </script>
 </body>
 </html>
