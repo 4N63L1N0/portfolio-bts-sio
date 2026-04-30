@@ -161,6 +161,59 @@
     /* ABOUT */
     .about-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
 
+    /* BTS SIO / E5-E6 */
+    .bts-subnav{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 16px}
+    .pill-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;
+      transition:background .2s ease,color .2s ease,border-color .2s ease;
+    }
+    .pill-link:hover{background:rgba(255,255,255,0.08);color:#f3f7ff;border-color:rgba(96,165,250,0.45)}
+    .bts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .section-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:14px;padding:18px;
+      box-shadow:0 8px 20px rgba(2,6,23,0.35);
+    }
+    .section-card h3,.section-card h4{margin:0 0 8px}
+    .section-card p,.section-card li{color:var(--muted)}
+    .section-card ul{margin:0;padding-left:18px}
+    .skills-inline{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .skills-inline .chip{background:rgba(255,255,255,0.05)}
+    .e6-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .kv-list{display:grid;gap:8px;margin-top:10px}
+    .kv{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:10px;padding:10px;
+    }
+    .kv strong{display:block;color:#f3f7ff;font-size:13px;margin-bottom:4px}
+    .screenshot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+    .screenshot-slot{
+      min-height:96px;border-radius:10px;border:1px dashed rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;
+      color:var(--muted);font-size:12px;text-align:center;padding:10px;
+    }
+    .table-wrap{
+      overflow:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.01);margin-top:12px;
+    }
+    .skills-table{width:100%;border-collapse:collapse;min-width:760px}
+    .skills-table th,.skills-table td{
+      text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;
+    }
+    .skills-table th{font-size:13px;color:#f3f7ff;background:rgba(255,255,255,0.04)}
+    .skills-table td{font-size:14px;color:var(--muted)}
+    .link-box{
+      margin-top:14px;padding:14px;border-radius:12px;
+      background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.28);
+      color:#d8e9ff;
+    }
+
     /* CONTACT */
     .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px}
     .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px}
@@ -187,6 +240,7 @@
       .grid{grid-template-columns:repeat(2,1fr)}
       .about-grid{grid-template-columns:1fr}
       .projects-columns{grid-template-columns:1fr}
+      .bts-grid,.e6-grid{grid-template-columns:1fr}
     }
     @media (max-width:640px){
       .grid{grid-template-columns:1fr}
@@ -195,6 +249,7 @@
       .menu-btn{display:inline-flex}
       .carousel-nav{width:34px;height:34px;font-size:18px}
       .veille-grid{grid-template-columns:1fr}
+      .screenshot-grid{grid-template-columns:1fr}
     }
 
     /* reveal animation */
@@ -222,6 +277,7 @@
       <div style="display:flex;align-items:center;gap:10px">
         <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
         <div class="navlinks" id="navLinks">
+          <a class="navbtn" href="#bts-sio">BTS SIO</a>
           <a class="navbtn" href="#projects">Projets</a>
           <a class="navbtn" href="#veille">Veille</a>
           <a class="navbtn" href="#about">À propos</a>
@@ -248,10 +304,8 @@
         <div style="font-weight:700">Angélino</div>
         <div style="color:var(--muted);font-size:14px;margin-bottom:8px">Technicien poste de travail indus — BTS SIO (A)</div>
         <div class="chips">
-          <div class="chip">HTML</div>
-          <div class="chip">CSS</div>
           <div class="chip">Mac OS</div>
-          <div class="chip">Linux</div>
+          <div class="chip">Linux - debian</div>
           <div class="chip">Windows</div>
           <div class="chip">Réseaux</div>
           <div class="chip">Cybersécurité</div>
@@ -273,6 +327,132 @@
          <p style="color:var(--muted)">J'ai pour but de continuer mes études et de me spécialiser dans le domaine de la cybersécurité et toujours en alternance car Terrena m'a proposer de continuer avec eux dans le domaine de la cybersécurité pour l'année prochaine.</p>
         </div>
       </div>
+    </section>
+
+    <!-- BTS SIO / E5-E6 -->
+    <section id="bts-sio" style="margin-top:28px">
+      <h2 class="reveal">BTS SIO</h2>
+      <p class="projects-sub reveal">Vue structurée de ma formation, de mes réalisations E6 et du lien avec l'épreuve E5.</p>
+
+      <!-- Ancres internes pour navigation rapide -->
+      <div class="bts-subnav reveal">
+        <a class="pill-link" href="#bts-overview">🎓 Présentation</a>
+        <a class="pill-link" href="#e6-blocks">🧩 E6: Réalisations</a>
+        <a class="pill-link" href="#skills-matrix">📊 Compétences</a>
+        <a class="pill-link" href="#e5e6-link">🔗 Lien E5 ↔ E6</a>
+      </div>
+
+      <div class="bts-grid">
+        <article class="section-card reveal" id="bts-overview">
+          <h3>🎓 Présentation du BTS SIO</h3>
+          <p>Le BTS SIO (Services Informatiques aux Organisations) forme aux métiers de l'informatique en entreprise: développement, administration, support, sécurité et gestion de services IT.</p>
+          <div class="kv-list">
+            <div class="kv">
+              <strong>Option SLAM</strong>
+              Conception et développement d'applications métiers, bases de données, interfaces et maintenance logicielle.
+            </div>
+            <div class="kv">
+              <strong>Option SISR (mon option)</strong>
+              Conception, déploiement et sécurisation d'infrastructures: réseaux, serveurs, virtualisation, supervision, gestion des accès et continuité de service.
+            </div>
+          </div>
+          <div class="skills-inline">
+            <span class="chip">🌐 Réseaux</span>
+            <span class="chip">🖥️ Systèmes</span>
+            <span class="chip">🔐 Cybersécurité</span>
+            <span class="chip">⚙️ Administration</span>
+          </div>
+        </article>
+
+        <article class="section-card reveal">
+          <h3>🛡️ Compétences SISR mises en avant</h3>
+          <ul>
+            <li>Administrer un SI et garantir sa disponibilité (comptes, droits, supervision).</li>
+            <li>Déployer des services réseau et systèmes selon les besoins métier.</li>
+            <li>Appliquer des mesures de cybersécurité: durcissement, contrôle d'accès, traçabilité.</li>
+            <li>Documenter les procédures pour faciliter exploitation, support et audit.</li>
+          </ul>
+          <div class="screenshot-grid">
+            <div class="screenshot-slot">📸 Emplacement capture<br>Architecture SISR</div>
+            <div class="screenshot-slot">📸 Emplacement capture<br>Supervision / Monitoring</div>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="reveal" id="e6-blocks" style="margin-top:18px">Réalisations professionnelles (E6)</h3>
+      <!-- Bloc extensible: ajouter de nouvelles réalisations E6 ici sous forme de section-card -->
+      <div class="e6-grid" style="margin-top:12px">
+        <article class="section-card reveal" id="e6-ad">
+          <h4>🖧 Active Directory</h4>
+          <div class="kv-list">
+            <div class="kv"><strong>Contexte</strong>Besoin de centraliser l'administration des postes et identités utilisateurs dans un environnement professionnel.</div>
+            <div class="kv"><strong>Objectifs</strong>Standardiser l'authentification, structurer les droits d'accès et automatiser l'application de règles de sécurité.</div>
+            <div class="kv"><strong>Mise en place</strong>Création du domaine, gestion des utilisateurs/groupes, organisation en OU, application de GPO (mots de passe, restrictions, configuration poste).</div>
+            <div class="kv"><strong>Problèmes rencontrés + solutions</strong>Conflits de stratégies et propagation GPO: résolution via tests ciblés, priorisation des GPO et vérification des liens OU.</div>
+            <div class="kv"><strong>Compétences mobilisées</strong>AD DS, DNS interne, administration Windows Server, gestion d'identité, documentation d'exploitation.</div>
+          </div>
+          <div class="screenshot-grid">
+            <div class="screenshot-slot">📸 Capture AD<br>Arborescence OU</div>
+            <div class="screenshot-slot">📸 Capture AD<br>Console GPO</div>
+          </div>
+        </article>
+
+        <article class="section-card reveal" id="e6-glpi">
+          <h4>🧰 GLPI</h4>
+          <div class="kv-list">
+            <div class="kv"><strong>Contexte</strong>Mise en place d'un outil de gestion du support et du parc pour améliorer suivi des incidents et visibilité des équipements.</div>
+            <div class="kv"><strong>Installation</strong>Déploiement en environnement de test (Docker ou VM selon contexte du site) puis configuration progressive des profils.</div>
+            <div class="kv"><strong>Configuration</strong>Gestion des utilisateurs/profils, workflow de tickets, inventaire des matériels et rattachement par service.</div>
+            <div class="kv"><strong>Cas concret</strong>Suivi d'une panne poste utilisateur: ticket, qualification, affectation, résolution et traçabilité complète de l'intervention.</div>
+            <div class="kv"><strong>Difficultés rencontrées</strong>Paramétrage des catégories/tickets et structure d'inventaire: ajustements des modèles pour refléter l'organisation réelle.</div>
+          </div>
+          <div class="screenshot-grid">
+            <div class="screenshot-slot">📸 Capture GLPI<br>Vue tickets</div>
+            <div class="screenshot-slot">📸 Capture GLPI<br>Inventaire</div>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="reveal" id="skills-matrix" style="margin-top:18px">Tableau de compétences</h3>
+      <div class="table-wrap reveal">
+        <table class="skills-table" aria-label="Tableau de compétences E6">
+          <thead>
+            <tr>
+              <th>Compétence</th>
+              <th>Projet associé</th>
+              <th>Description de la preuve</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Administrer les identités et accès</td>
+              <td>Active Directory</td>
+              <td>Création d'utilisateurs/groupes, structuration en OU, droits alignés aux besoins métiers.</td>
+            </tr>
+            <tr>
+              <td>Déployer une stratégie de sécurité poste</td>
+              <td>Active Directory</td>
+              <td>Application de GPO pour politiques mot de passe, restrictions et paramétrage homogène.</td>
+            </tr>
+            <tr>
+              <td>Gérer le support utilisateur</td>
+              <td>GLPI</td>
+              <td>Cycle complet de ticket: création, qualification, affectation, résolution, historisation.</td>
+            </tr>
+            <tr>
+              <td>Maintenir un inventaire technique</td>
+              <td>GLPI</td>
+              <td>Centralisation des actifs, catégorisation du parc et suivi opérationnel des équipements.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="section-card reveal" id="e5e6-link" style="margin-top:14px">
+        <h3>🔗 Lien E5 ↔ E6</h3>
+        <p>Mes projets Active Directory et GLPI s'inscrivent dans un contexte professionnel concret: ils répondent à des besoins d'administration, de sécurité et de support au sein de l'entreprise. Ils démontrent mes compétences SISR sur la gestion d'infrastructure, la maîtrise des accès, la traçabilité des interventions et la documentation technique.</p>
+        <div class="link-box">Ensemble, ces réalisations illustrent mon parcours BTS SIO SISR: passer d'une demande métier à une solution exploitable, sécurisée et maintenable.</div>
+      </article>
     </section>
     <!-- Projects -->
     <section id="projects">
