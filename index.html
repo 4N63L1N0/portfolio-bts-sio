@@ -173,6 +173,13 @@
     }
     .pill-link:hover{background:rgba(255,255,255,0.08);color:#f3f7ff;border-color:rgba(96,165,250,0.45)}
     .bts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .primary-link{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      background:linear-gradient(90deg,var(--accent-from),var(--accent-to));
+      border:none;padding:10px 16px;border-radius:10px;color:#042033;text-decoration:none;
+      font-weight:700;transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .primary-link:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(2,6,23,0.35)}
     .section-card{
       background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.06);
@@ -197,21 +204,6 @@
       min-height:96px;border-radius:10px;border:1px dashed rgba(255,255,255,0.2);
       background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;
       color:var(--muted);font-size:12px;text-align:center;padding:10px;
-    }
-    .table-wrap{
-      overflow:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.08);
-      background:rgba(255,255,255,0.01);margin-top:12px;
-    }
-    .skills-table{width:100%;border-collapse:collapse;min-width:760px}
-    .skills-table th,.skills-table td{
-      text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;
-    }
-    .skills-table th{font-size:13px;color:#f3f7ff;background:rgba(255,255,255,0.04)}
-    .skills-table td{font-size:14px;color:var(--muted)}
-    .link-box{
-      margin-top:14px;padding:14px;border-radius:12px;
-      background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.28);
-      color:#d8e9ff;
     }
 
     /* CONTACT */
@@ -332,14 +324,13 @@
     <!-- BTS SIO / E5-E6 -->
     <section id="bts-sio" style="margin-top:28px">
       <h2 class="reveal">BTS SIO</h2>
-      <p class="projects-sub reveal">Vue structurée de ma formation, de mes réalisations E6 et du lien avec l'épreuve E5.</p>
+      <p class="projects-sub reveal">Vue structurée de ma formation et de mes réalisations professionnelles E6.</p>
 
       <!-- Ancres internes pour navigation rapide -->
       <div class="bts-subnav reveal">
         <a class="pill-link" href="#bts-overview">🎓 Présentation</a>
         <a class="pill-link" href="#e6-blocks">🧩 E6: Réalisations</a>
-        <a class="pill-link" href="#skills-matrix">📊 Compétences</a>
-        <a class="pill-link" href="#e5e6-link">🔗 Lien E5 ↔ E6</a>
+        <a class="pill-link" href="epreuve-e6.html">📘 Page Épreuve E6</a>
       </div>
 
       <div class="bts-grid">
@@ -365,16 +356,12 @@
         </article>
 
         <article class="section-card reveal">
-          <h3>🛡️ Compétences SISR mises en avant</h3>
-          <ul>
-            <li>Administrer un SI et garantir sa disponibilité (comptes, droits, supervision).</li>
-            <li>Déployer des services réseau et systèmes selon les besoins métier.</li>
-            <li>Appliquer des mesures de cybersécurité: durcissement, contrôle d'accès, traçabilité.</li>
-            <li>Documenter les procédures pour faciliter exploitation, support et audit.</li>
-          </ul>
+          <h3>📘 Épreuve E6</h3>
+          <p>Retrouve sur une page dédiée l'objectif de l'épreuve E6, ses modalités d'évaluation et mes projets support (Active Directory et GLPI).</p>
+          <a class="primary-link" href="epreuve-e6.html">Voir la page Épreuve E6</a>
           <div class="screenshot-grid">
-            <div class="screenshot-slot">📸 Emplacement capture<br>Architecture SISR</div>
-            <div class="screenshot-slot">📸 Emplacement capture<br>Supervision / Monitoring</div>
+            <div class="screenshot-slot">📸 Emplacement capture<br>Objectif E6</div>
+            <div class="screenshot-slot">📸 Emplacement capture<br>Modalités E6</div>
           </div>
         </article>
       </div>
@@ -412,47 +399,6 @@
           </div>
         </article>
       </div>
-
-      <h3 class="reveal" id="skills-matrix" style="margin-top:18px">Tableau de compétences</h3>
-      <div class="table-wrap reveal">
-        <table class="skills-table" aria-label="Tableau de compétences E6">
-          <thead>
-            <tr>
-              <th>Compétence</th>
-              <th>Projet associé</th>
-              <th>Description de la preuve</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Administrer les identités et accès</td>
-              <td>Active Directory</td>
-              <td>Création d'utilisateurs/groupes, structuration en OU, droits alignés aux besoins métiers.</td>
-            </tr>
-            <tr>
-              <td>Déployer une stratégie de sécurité poste</td>
-              <td>Active Directory</td>
-              <td>Application de GPO pour politiques mot de passe, restrictions et paramétrage homogène.</td>
-            </tr>
-            <tr>
-              <td>Gérer le support utilisateur</td>
-              <td>GLPI</td>
-              <td>Cycle complet de ticket: création, qualification, affectation, résolution, historisation.</td>
-            </tr>
-            <tr>
-              <td>Maintenir un inventaire technique</td>
-              <td>GLPI</td>
-              <td>Centralisation des actifs, catégorisation du parc et suivi opérationnel des équipements.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <article class="section-card reveal" id="e5e6-link" style="margin-top:14px">
-        <h3>🔗 Lien E5 ↔ E6</h3>
-        <p>Mes projets Active Directory et GLPI s'inscrivent dans un contexte professionnel concret: ils répondent à des besoins d'administration, de sécurité et de support au sein de l'entreprise. Ils démontrent mes compétences SISR sur la gestion d'infrastructure, la maîtrise des accès, la traçabilité des interventions et la documentation technique.</p>
-        <div class="link-box">Ensemble, ces réalisations illustrent mon parcours BTS SIO SISR: passer d'une demande métier à une solution exploitable, sécurisée et maintenable.</div>
-      </article>
     </section>
     <!-- Projects -->
     <section id="projects">

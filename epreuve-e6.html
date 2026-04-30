@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Épreuve E6 — BTS SIO SISR</title>
+  <meta name="description" content="Présentation de l'épreuve E6 du BTS SIO SISR: objectif, modalités d'évaluation et projets support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#071022;
+      --muted:#9aa6b2;
+      --accent-from:#5eead4;
+      --accent-to:#60a5fa;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:28px 20px;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#e6eef6}
+    .container{max-width:1100px;margin:0 auto}
+    nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow:0 8px 24px rgba(2,6,23,0.45)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-to),var(--accent-from));display:flex;align-items:center;justify-content:center;font-weight:700;color:#042033}
+    a{color:var(--muted);text-decoration:none}
+    a:hover{color:#fff}
+    .hero{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);margin-bottom:18px}
+    h1{margin:0 0 8px;font-size:clamp(28px,4vw,38px)}
+    .lead{margin:0;color:var(--muted)}
+    .subnav{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+    .pill-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--muted);font-size:13px;font-weight:600}
+    .pill-link:hover{background:rgba(255,255,255,0.08);color:#f3f7ff;border-color:rgba(96,165,250,0.45)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 20px rgba(2,6,23,0.35)}
+    .card h2,.card h3{margin:0 0 10px}
+    .card p,.card li{color:var(--muted)}
+    .card ul{margin:0;padding-left:18px}
+    .kv{margin-top:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px}
+    .kv strong{display:block;color:#f3f7ff;font-size:13px;margin-bottom:4px}
+    .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+    .slot{min-height:90px;border-radius:10px;border:1px dashed rgba(255,255,255,0.2);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:10px}
+    footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    @media (max-width:640px){.shots{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="brand">
+        <div class="logo">AF</div>
+        <div>
+          <div style="font-weight:700">4N63L1N0 — Épreuve E6</div>
+          <div style="font-size:13px;color:var(--muted)">BTS SIO SISR</div>
+        </div>
+      </div>
+      <a href="index.html#bts-sio">← Retour au portfolio</a>
+    </nav>
+
+    <section class="hero">
+      <h1>Épreuve E6 — Parcours professionnel</h1>
+      <p class="lead">Cette page présente l'objectif de l'épreuve E6, ses modalités d'évaluation et les projets professionnels utilisés comme support.</p>
+      <div class="subnav">
+        <a class="pill-link" href="#objectif">🎯 Objectif</a>
+        <a class="pill-link" href="#modalites">📝 Modalités</a>
+        <a class="pill-link" href="#projets">🧩 Projets support</a>
+      </div>
+    </section>
+
+    <section class="grid" id="objectif">
+      <article class="card">
+        <h2>🎯 Objectif de l'épreuve E6</h2>
+        <p>L'épreuve E6 permet d'évaluer la capacité à analyser un besoin professionnel, proposer une solution technique cohérente, la mettre en oeuvre et en justifier les choix dans un contexte réel de services informatiques.</p>
+        <div class="kv">
+          <strong>Attendus principaux</strong>
+          Qualité technique de la solution, prise en compte de la sécurité, exploitabilité, documentation et capacité de présentation orale.
+        </div>
+      </article>
+
+      <article class="card" id="modalites">
+        <h2>📝 Modalités d'évaluation (descriptif rapide)</h2>
+        <ul>
+          <li>Présentation structurée de situations professionnelles réalisées.</li>
+          <li>Démonstration des compétences techniques mobilisées.</li>
+          <li>Argumentation des choix d'architecture, d'outillage et de sécurité.</li>
+          <li>Entretien avec le jury sur la mise en oeuvre et les résultats.</li>
+        </ul>
+        <div class="kv">
+          <strong>Points valorisés</strong>
+          Maîtrise des infrastructures, méthodes de travail, capacité d'analyse et recul professionnel.
+        </div>
+      </article>
+    </section>
+
+    <h2 id="projets" style="margin:18px 0 10px">🧩 Projets support E6</h2>
+    <section class="grid">
+      <article class="card">
+        <h3>🖧 Active Directory</h3>
+        <div class="kv"><strong>Contexte</strong>Centraliser l'administration des postes et identités dans un environnement professionnel.</div>
+        <div class="kv"><strong>Objectifs</strong>Standardiser l'authentification, structurer les droits et automatiser les politiques de sécurité.</div>
+        <div class="kv"><strong>Mise en place</strong>Création du domaine, gestion utilisateurs/groupes, organisation en OU, déploiement de GPO.</div>
+        <div class="kv"><strong>Problèmes + solutions</strong>Conflits de stratégies et propagation GPO résolus par tests ciblés, priorisation et vérification des liaisons OU.</div>
+        <div class="kv"><strong>Compétences mobilisées</strong>AD DS, DNS interne, administration Windows Server, gestion d'identité, documentation.</div>
+        <div class="shots">
+          <div class="slot">📸 Capture AD<br>Arborescence OU</div>
+          <div class="slot">📸 Capture AD<br>Console GPO</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>🧰 GLPI</h3>
+        <div class="kv"><strong>Contexte</strong>Mettre en place un outil de support et de gestion du parc pour améliorer le suivi des incidents.</div>
+        <div class="kv"><strong>Installation</strong>Déploiement en environnement de test (Docker ou VM selon le contexte) puis ajustements progressifs.</div>
+        <div class="kv"><strong>Configuration</strong>Gestion des utilisateurs/profils, workflow de tickets, inventaire des équipements par service.</div>
+        <div class="kv"><strong>Cas concret</strong>Ticket de panne poste utilisateur: qualification, affectation, résolution et historisation complète.</div>
+        <div class="kv"><strong>Difficultés rencontrées</strong>Paramétrage des catégories de tickets et organisation de l'inventaire alignés ensuite au besoin réel.</div>
+        <div class="shots">
+          <div class="slot">📸 Capture GLPI<br>Vue tickets</div>
+          <div class="slot">📸 Capture GLPI<br>Inventaire</div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Angélino — Portfolio BTS SIO
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
