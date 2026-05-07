@@ -180,6 +180,23 @@
       font-weight:700;transition:transform .2s ease,box-shadow .2s ease;
     }
     .primary-link:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(2,6,23,0.35)}
+    .e6-highlight{display:flex;flex-direction:column;gap:12px}
+    .e6-cta{align-self:flex-start}
+    .e6-preview{
+      margin-top:2px;border-radius:12px;overflow:hidden;
+      border:1px solid rgba(255,255,255,0.10);
+      box-shadow:0 10px 22px rgba(2,6,23,0.4);
+      background:rgba(255,255,255,0.03);
+    }
+    .e6-preview img{
+      width:100%;height:150px;object-fit:cover;display:block;
+      filter:saturate(1.02) contrast(1.02);
+    }
+    .e6-preview figcaption{
+      padding:8px 10px;font-size:12px;color:var(--muted);
+      border-top:1px solid rgba(255,255,255,0.08);
+      background:rgba(2,6,23,0.25);
+    }
     .section-card{
       background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.06);
@@ -354,10 +371,14 @@
           </div>
         </article>
 
-        <article class="section-card reveal">
+        <article class="section-card reveal e6-highlight">
           <h3>📘 Épreuve E6</h3>
           <p>Retrouve sur une page dédiée l'objectif de l'épreuve E6, ses modalités d'évaluation et mes projets support (Active Directory et GLPI).</p>
-          <a class="primary-link" href="epreuve-e6.html">Voir la page Épreuve E6</a>
+          <a class="primary-link e6-cta" href="epreuve-e6.html">Voir la page Épreuve E6</a>
+          <figure class="e6-preview">
+            <img src="projects/images/projsup.png" alt="Aperçu de la documentation Épreuve E6">
+            <figcaption>Aperçu visuel — dossier Épreuve E6</figcaption>
+          </figure>
         </article>
       </div>
 
