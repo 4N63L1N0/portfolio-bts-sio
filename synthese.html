@@ -61,7 +61,7 @@
         <a id="downloadPdfLink" class="button-link" href="synthese.pdf" download style="margin-left:auto">Télécharger le PDF</a>
       </div>
       <div class="pdf-viewer" id="pdfViewerWrap" aria-live="polite">
-        <iframe id="pdfViewer" src="synthese.pdf"></iframe>
+        <iframe id="pdfViewer" src="Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf"></iframe>
       </div>
     </section>
     <footer>
@@ -109,27 +109,7 @@
         if (currentPdfUrl && currentPdfUrl.startsWith('blob:')) URL.revokeObjectURL(currentPdfUrl);
       });
 
-      // download CSV and print logic preserved
-      function tableToCSV(table){
-        const rows = Array.from(table.querySelectorAll('tr'));
-        return rows.map(r => {
-          const cells = Array.from(r.querySelectorAll('th,td'));
-          return cells.map(c => '"' + c.textContent.replace(/"/g, '""') + '"').join(',');
-        }).join('\n');
-      }
-
-      document.getElementById('downloadCsv').addEventListener('click', ()=>{
-        const table = document.getElementById('syntheseTable');
-        const csv = tableToCSV(table);
-        const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = 'tableau_synthese.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-      });
-
-      document.getElementById('printView').addEventListener('click', ()=>{
-        window.print();
-      });
+      // legacy listeners removed: no CSV / print controls in current UI
 
     })();
   </script>
