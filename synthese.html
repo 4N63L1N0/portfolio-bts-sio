@@ -57,10 +57,10 @@
       <div class="pdf-controls">
         <input id="pdfInput" type="file" accept="application/pdf" style="display:none">
         <button class="btn-primary" id="useServerPdf">Actualiser</button>
-        <a id="downloadPdfLink" class="button-link" href="Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf" download style="margin-left:auto">Télécharger le PDF</a>
+        <a id="downloadPdfLink" class="button-link" href="synthese.pdf" download style="margin-left:auto">Télécharger le PDF</a>
       </div>
       <div class="pdf-viewer" id="pdfViewerWrap" aria-live="polite">
-        <iframe id="pdfViewer" src="Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf"></iframe>
+        <iframe id="pdfViewer" src="synthese.pdf"></iframe>
       </div>
     </section>
     <footer>
@@ -78,7 +78,7 @@
       const viewer = document.getElementById('pdfViewer');
       const useServer = document.getElementById('useServerPdf');
       const downloadLink = document.getElementById('downloadPdfLink');
-      let currentPdfUrl = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
+      let currentPdfUrl = 'synthese.pdf';
 
       // When user selects a file, preview it using object URL
       input.addEventListener('change', (e) => {
@@ -92,15 +92,12 @@
         downloadLink.download = file.name || 'synthese_local.pdf';
       });
 
-      // wire the choose label to input
-      document.querySelector('label[for="pdfInput"]').addEventListener('click', ()=> input.click());
-
       // use server copy button
       useServer.addEventListener('click', ()=>{
-        currentPdfUrl = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
+        currentPdfUrl = 'synthese.pdf';
         viewer.src = currentPdfUrl;
         downloadLink.href = currentPdfUrl;
-        downloadLink.download = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
+        downloadLink.download = 'synthese.pdf';
       });
 
       // cleanup object URL when unloading or when switching to server file
