@@ -44,7 +44,7 @@
         <div class="logo">AG</div>
         <div>
           <h1>Tableau de synthèse</h1>
-          <div class="lead">Zone pour héberger et prévisualiser ton PDF de synthèse.</div>
+          <div class="lead">Mes réalisations au cours des deux années.</div>
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
@@ -55,10 +55,9 @@
     <!-- PDF upload / viewer -->
     <section class="pdf-area" aria-label="PDF synthese">
       <div class="pdf-controls">
-        <label for="pdfInput" class="button-link">Choisir un PDF</label>
         <input id="pdfInput" type="file" accept="application/pdf" style="display:none">
-        <button class="btn-primary" id="useServerPdf">Utiliser synthese.pdf (racine)</button>
-        <a id="downloadPdfLink" class="button-link" href="synthese.pdf" download style="margin-left:auto">Télécharger le PDF</a>
+        <button class="btn-primary" id="useServerPdf">Actualiser</button>
+        <a id="downloadPdfLink" class="button-link" href="Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf" download style="margin-left:auto">Télécharger le PDF</a>
       </div>
       <div class="pdf-viewer" id="pdfViewerWrap" aria-live="polite">
         <iframe id="pdfViewer" src="Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf"></iframe>
@@ -79,7 +78,7 @@
       const viewer = document.getElementById('pdfViewer');
       const useServer = document.getElementById('useServerPdf');
       const downloadLink = document.getElementById('downloadPdfLink');
-      let currentPdfUrl = 'synthese.pdf';
+      let currentPdfUrl = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
 
       // When user selects a file, preview it using object URL
       input.addEventListener('change', (e) => {
@@ -98,10 +97,10 @@
 
       // use server copy button
       useServer.addEventListener('click', ()=>{
-        currentPdfUrl = 'synthese.pdf';
+        currentPdfUrl = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
         viewer.src = currentPdfUrl;
         downloadLink.href = currentPdfUrl;
-        downloadLink.download = 'synthese.pdf';
+        downloadLink.download = 'Tableau de synthèse Épreuve E5 - Tableau de synthèse Épreuve E5.pdf';
       });
 
       // cleanup object URL when unloading or when switching to server file
