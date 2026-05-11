@@ -36,6 +36,15 @@
     .card ul{margin:0;padding-left:18px}
     .kv{margin-top:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px}
     .kv strong{display:block;color:#f3f7ff;font-size:13px;margin-bottom:4px}
+    .doc-actions{margin-top:12px}
+    .doc-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      background:linear-gradient(90deg,var(--accent-from),var(--accent-to));
+      color:#042033;text-decoration:none;font-weight:700;
+      padding:10px 14px;border-radius:10px;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .doc-btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(2,6,23,0.35)}
     .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
     .slot{min-height:90px;border-radius:10px;border:1px dashed rgba(255,255,255,0.2);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:10px}
     footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
@@ -100,6 +109,9 @@
         <div class="kv"><strong>Mise en place</strong>Création du domaine, gestion des utilisateurs/groupes, organisation en OU, déploiement de GPO.</div>
         <div class="kv"><strong>Problèmes + solutions</strong>Conflits de stratégies et propagation des GPO, résolus par des tests ciblés, une priorisation claire et la vérification des liaisons OU.</div>
         <div class="kv"><strong>Compétences mobilisées</strong>AD DS, DNS interne, administration Windows Server, gestion d'identité, documentation.</div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="e6-ad-document.html">Voir le document projet Active Directory</a>
+        </div>
       </article>
 
       <article class="card">
@@ -109,6 +121,9 @@
         <div class="kv"><strong>Configuration</strong>Gestion des utilisateurs/profils, workflow de tickets, inventaire des équipements par service.</div>
         <div class="kv"><strong>Cas concret</strong>Ticket de panne poste utilisateur: qualification, affectation, résolution et historisation complète.</div>
         <div class="kv"><strong>Difficultés rencontrées</strong>Paramétrage des catégories de tickets et organisation de l'inventaire, ensuite alignés aux besoins réels.</div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="e6-glpi-document.html">Voir le document projet GLPI</a>
+        </div>
       </article>
     </section>
 
